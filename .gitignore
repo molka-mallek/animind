@@ -1,0 +1,13 @@
+# Frontend dependencies
+frontend/node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables (passwords, API keys)
+.env
+
+# AI model files (too large for git)
+backend/model/*.keras
+*.keras
