@@ -35,6 +35,9 @@ The platform combines multiple AI models for emotion detection, behavior classif
 ### Current Features (Available)
 - ✅ **Dog Emotion Recognition** — Classify dog emotions from photos/videos (happy, sad, angry, relaxed, fearful)
 - ✅ **Real-Time Calf Behavior Monitoring** — Live accelerometer-based behavior classification (lying, standing, eating, active, social, abnormal)
+- ✅ **Eye Infection Detection** — Screen for eye infections in cats and dogs using ResNet18-based classification
+- ✅ **Chicken Fowlpox Detection** — Identify fowlpox disease in poultry using EfficientNet-B0 architecture
+- ✅ **Bird Droppings Analysis** — Assess bird health through fecal matter analysis using ResNet18
 - ✅ **Multi-Modal Analysis** — Support for image, video, and sensor data inputs
 - ✅ **Interactive Dashboard** — Streamlit-based real-time monitoring interface
 - ✅ **REST API** — FastAPI backend for scalable deployment
@@ -46,9 +49,7 @@ The platform combines multiple AI models for emotion detection, behavior classif
 - 🔜 **Dog Vocalization Analysis** — Audio-based emotion detection from barks and whines
 - 🔜 **Horse Pain Detection** — Video analysis for pain and discomfort indicators
 - 🔜 **Skin Anomaly Detection** — Dermatological disease detection in dogs and cats
-- 🔜 **Eye Disease Detection** — Ophthalmic condition screening
-- 🔜 **Fowlpox Detection** — Disease detection in poultry
-- 🔜 **Bird Droppings Analysis** — Health assessment through fecal analysis
+- 🔜 **Multi-language Support** — Interface localization
 
 ---
 
@@ -81,6 +82,8 @@ The platform combines multiple AI models for emotion detection, behavior classif
 
 ### Model Architectures
 - **CNN (Convolutional Neural Networks)** — Image-based emotion recognition
+- **ResNet18** — Eye infection and bird droppings classification
+- **EfficientNet-B0** — Chicken fowlpox detection
 - **GRU (Gated Recurrent Units)** — Time-series behavior classification
 - **Transfer Learning** — Pre-trained models for feature extraction
 - **Ensemble Methods** — Multi-model prediction aggregation
@@ -115,7 +118,10 @@ animind/
 │   │   │   ├── Modules.jsx            # Feature selection
 │   │   │   └── Dashboard.jsx          # Analytics dashboard
 │   │   ├── modules/                   # Feature modules
-│   │   │   └── DogEmotion.jsx         # Dog emotion analysis UI
+│   │   │   ├── DogEmotion.jsx         # Dog emotion analysis UI
+│   │   │   ├── EyeInfection.jsx       # Eye infection detection UI
+│   │   │   ├── ChickenFowlpox.jsx     # Fowlpox detection UI
+│   │   │   └── BirdDroppings.jsx      # Bird droppings analysis UI
 │   │   ├── data/
 │   │   │   └── modules.js             # Module configuration
 │   │   ├── App.jsx                    # Root component
@@ -128,8 +134,16 @@ animind/
 │   ├── modules/                       # AI pipeline modules
 │   │   ├── dog_emotion/
 │   │   │   └── ai_pipeline.py         # Dog emotion inference
-│   │   └── calf_behavior/
-│   │       └── ai_pipeline.py         # Calf behavior inference
+│   │   ├── calf_behavior/
+│   │   │   └── ai_pipeline.py         # Calf behavior inference
+│   │   ├── cat and dogs eye infection/
+│   │   │   ├── ai_pipeline.py         # Eye infection detection
+│   │   │   └── cat_eye_infection_resnet18_best.pth
+│   │   └── chiken/
+│   │       ├── fowlpox_ai_pipeline.py # Fowlpox detection
+│   │       ├── fowlpox_efficientnet_b0_best.pth
+│   │       ├── bird_droppings_ai_pipeline.py
+│   │       └── bird_droppings_resnet18_best.pth
 │   ├── model/                         # Trained models
 │   │   ├── dog_emotion_best_model.keras
 │   │   └── calf_behavior/
@@ -269,6 +283,20 @@ streamlit run calf_dashboard.py
 4. Monitor real-time behavior classification
 5. Respond to alerts (abnormal behavior, lying streak, etc.)
 
+#### Eye Infection Detection
+1. Navigate to `http://localhost:5173`
+2. Click "Start Analysis"
+3. Select "Eye Infection Detection"
+4. Upload a clear eye photo of your cat or dog
+5. View infection screening results
+
+#### Chicken Fowlpox / Bird Droppings Analysis
+1. Navigate to `http://localhost:5173`
+2. Click "Start Analysis"
+3. Select the appropriate module
+4. Upload a clear photo
+5. View health assessment results
+
 #### API Usage
 ```python
 import requests
@@ -390,6 +418,9 @@ Backend offline — please contact support
 ### Phase 1 (Current)
 - ✅ Dog emotion recognition
 - ✅ Calf behavior monitoring
+- ✅ Eye infection detection (cats/dogs)
+- ✅ Chicken fowlpox detection
+- ✅ Bird droppings analysis
 - ✅ REST API
 - ✅ Web interface
 - ✅ Real-time dashboard
