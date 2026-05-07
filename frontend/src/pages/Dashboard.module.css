@@ -155,6 +155,12 @@
   flex-shrink: 0;
 }
 
+.ext {
+  font-size: 14px;
+  color: #d97706;
+  font-weight: 700;
+}
+
 .soon {
   font-size: 10px;
   font-weight: 600;

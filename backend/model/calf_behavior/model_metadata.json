@@ -1,0 +1,1 @@
+{"window_size": 100, "n_features": 8, "feature_cols": ["accX", "accY", "accZ", "mag", "ODBA", "VeDBA", "pitch", "roll"], "class_names": ["abnormal", "active", "eating_drinking", "lying", "social", "standing"]}

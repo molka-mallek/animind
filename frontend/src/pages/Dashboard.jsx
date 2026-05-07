@@ -50,8 +50,11 @@ export default function Dashboard() {
           {modules.slice(0, 4).map((mod) => (
             <div
               key={mod.id}
-              className={`${styles.card} ${!mod.route ? styles.cardDisabled : ''}`}
-              onClick={() => mod.route && navigate(mod.route)}
+              className={`${styles.card} ${(!mod.route && !mod.external) ? styles.cardDisabled : ''}`}
+              onClick={() => {
+                if (mod.route) navigate(mod.route)
+                else if (mod.external) window.open(mod.external, '_blank')
+              }}
             >
               <span className={styles.cardIcon}>{mod.icon}</span>
               <div className={styles.cardBody}>
@@ -59,7 +62,7 @@ export default function Dashboard() {
                 <p className={styles.cardDesc}>{mod.description}</p>
               </div>
               <div className={styles.cardArrow}>
-                {mod.route ? '→' : <span className={styles.soon}>Soon</span>}
+                {mod.route ? '→' : mod.external ? <span className={styles.ext}>↗</span> : <span className={styles.soon}>Soon</span>}
               </div>
             </div>
           ))}

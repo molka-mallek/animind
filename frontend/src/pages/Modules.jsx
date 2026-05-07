@@ -29,11 +29,14 @@ export default function Modules() {
             <h3 className={styles.cardTitle}>{mod.title}</h3>
             <p className={styles.cardDesc}>{mod.description}</p>
             <button
-              className={mod.route ? styles.cardBtn : styles.cardBtnDisabled}
-              onClick={() => mod.route && navigate(mod.route)}
-              disabled={!mod.route}
+              className={mod.route ? styles.cardBtn : mod.external ? styles.cardBtnExternal : styles.cardBtnDisabled}
+              onClick={() => {
+                if (mod.route) navigate(mod.route)
+                else if (mod.external) window.open(mod.external, '_blank')
+              }}
+              disabled={!mod.route && !mod.external}
             >
-              {mod.route ? 'Start →' : 'Coming soon'}
+              {mod.route ? 'Start →' : mod.external ? 'Open Dashboard ↗' : 'Coming soon'}
             </button>
           </div>
         ))}

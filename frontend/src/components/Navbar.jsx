@@ -18,7 +18,6 @@ export default function Navbar({ onMenuClick }) {
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.signInBtn}>Sign In</button>
         <NavLink to="/modules" className={styles.ctaBtn}>
           Start Analysis
         </NavLink>

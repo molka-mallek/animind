@@ -7,17 +7,21 @@
 
 /* ── HERO ── */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   align-items: center;
-  padding: 48px 0 20px;
+  text-align: center;
+  padding: 60px 0 40px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .heroInner {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  align-items: center;
 }
 
 .heroBadge {
@@ -50,13 +54,14 @@
   font-size: 17px;
   color: var(--text-muted);
   line-height: 1.7;
-  max-width: 460px;
+  max-width: 600px;
 }
 
 .heroActions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btnPrimary {
@@ -118,97 +123,7 @@
   background: var(--border);
 }
 
-/* Hero visual card */
-.heroVisual {
-  display: flex;
-  justify-content: center;
-}
-
-.heroCard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  width: 100%;
-  max-width: 320px;
-  box-shadow: var(--shadow-lg);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.heroCardTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.heroCardEmoji { font-size: 36px; }
-
-.heroCardBadge {
-  font-size: 11px;
-  font-weight: 600;
-  color: #16a34a;
-  background: #f0fdf4;
-  border: 1px solid #86efac;
-  border-radius: 99px;
-  padding: 4px 10px;
-}
-
-.heroCardEmotion {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--primary-light);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-}
-
-.heroCardEmotionEmoji { font-size: 28px; }
-
-.heroCardEmotionLabel {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--primary-dark);
-}
-
-.heroCardEmotionSub {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.heroCardBar { display: flex; flex-direction: column; gap: 6px; }
-
-.heroCardBarLabel {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.heroCardBarTrack {
-  height: 6px;
-  background: var(--border);
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.heroCardBarFill {
-  height: 100%;
-  background: var(--primary);
-  border-radius: 99px;
-}
-
-.heroCardAdvice {
-  font-size: 13px;
-  color: #92400e;
-  background: #fffbeb;
-  border: 1px solid #fde68a;
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-}
+/* Hero visual card - REMOVED */
 
 /* ── SECTIONS ── */
 .section {
@@ -232,50 +147,6 @@
   letter-spacing: -0.5px;
   line-height: 1.2;
   margin-top: -12px;
-}
-
-/* ── STEPS ── */
-.stepsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.stepCard {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-  transition: box-shadow var(--transition), transform var(--transition);
-}
-.stepCard:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.stepNum {
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--primary);
-  letter-spacing: 0.08em;
-}
-
-.stepIcon { font-size: 28px; }
-
-.stepTitle {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.stepDesc {
-  font-size: 13px;
-  color: var(--text-muted);
-  line-height: 1.6;
 }
 
 /* ── AUDIENCE ── */
@@ -438,10 +309,7 @@
 }
 
 @media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; }
-  .heroVisual { display: none; }
   .heroTitle { font-size: 34px; }
-  .stepsGrid { grid-template-columns: 1fr; }
   .audienceGrid { grid-template-columns: 1fr; }
   .featuresGrid { grid-template-columns: repeat(2, 1fr); }
   .ctaSection { padding: 40px 24px; }

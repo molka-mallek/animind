@@ -33,7 +33,6 @@
   line-height: 1.6;
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -106,6 +105,19 @@
   margin-top: 4px;
 }
 .cardBtn:hover { background: var(--primary-dark); }
+
+.cardBtnExternal {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fcd34d;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+  transition: background var(--transition);
+}
+.cardBtnExternal:hover { background: #fef3c7; }
 
 .cardBtnDisabled {
   background: var(--bg);
