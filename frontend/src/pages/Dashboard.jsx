@@ -11,6 +11,8 @@ const stats = [
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const availableModules = modules.filter(mod => mod.route || mod.external).slice(0, 5)
+  const gridClass = availableModules.length === 5 ? styles.gridFive : styles.grid
 
   return (
     <div className={styles.page}>
@@ -46,11 +48,11 @@ export default function Dashboard() {
             See all →
           </button>
         </div>
-        <div className={styles.grid}>
-          {modules.slice(0, 4).map((mod) => (
+        <div className={gridClass}>
+          {availableModules.map((mod) => (
             <div
               key={mod.id}
-              className={`${styles.card} ${(!mod.route && !mod.external) ? styles.cardDisabled : ''}`}
+              className={styles.card}
               onClick={() => {
                 if (mod.route) navigate(mod.route)
                 else if (mod.external) window.open(mod.external, '_blank')

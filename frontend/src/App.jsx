@@ -8,6 +8,7 @@ import DogEmotion from './modules/DogEmotion'
 import EyeInfection from './modules/EyeInfection'
 import ChickenFowlpox from './modules/ChickenFowlpox'
 import BirdDroppings from './modules/BirdDroppings'
+import SkinAnomaly from './modules/SkinAnomaly'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="modules/eye-infection" element={<EyeInfection />} />
           <Route path="modules/chicken-fowlpox" element={<ChickenFowlpox />} />
           <Route path="modules/bird-droppings" element={<BirdDroppings />} />
+          <Route path="modules/skin-anomaly" element={<SkinAnomaly />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

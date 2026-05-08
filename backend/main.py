@@ -21,6 +21,8 @@ predict_fowlpox = None
 _fowlpox_pipeline_error = None
 predict_bird_droppings = None
 _bird_droppings_pipeline_error = None
+predict_skin_anomaly = None
+_skin_anomaly_pipeline_error = None
 
 
 def _ensure_dog_pipeline_loaded():
@@ -138,6 +140,30 @@ def _ensure_bird_droppings_pipeline_loaded():
         _bird_droppings_pipeline_error = err
         return err
     predict_bird_droppings = func
+    return None
+
+
+def _ensure_skin_anomaly_pipeline_loaded():
+    global predict_skin_anomaly, _skin_anomaly_pipeline_error
+    if predict_skin_anomaly is not None:
+        return None
+    if _skin_anomaly_pipeline_error is not None:
+        return _skin_anomaly_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent
+        / "modules"
+        / "skin_anomaly"
+        / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(
+        pipeline_path,
+        "skin_anomaly_pipeline",
+        "predict_skin_anomaly",
+    )
+    if err:
+        _skin_anomaly_pipeline_error = err
+        return err
+    predict_skin_anomaly = func
     return None
 
 # ─────────────────────────────────────────────
@@ -415,6 +441,33 @@ async def predict_bird_droppings_api(file: UploadFile = File(...)):
         return result
     except Exception as e:
         return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ── SKIN ANOMALY PREDICTION ────────────────────
+@app.post("/predict-skin-anomaly")
+async def predict_skin_anomaly_api(file: UploadFile = File(...)):
+    temp_path = None
+
+    try:
+        skin_error = _ensure_skin_anomaly_pipeline_loaded()
+        if skin_error:
+            return {"error": f"Skin anomaly model unavailable: {skin_error}"}
+
+        contents = await file.read()
+        temp_path = f"temp_{uuid.uuid4().hex}.jpg"
+
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+
+        result = predict_skin_anomaly(temp_path)
+        return result
+
+    except Exception as e:
+        return {"error": str(e)}
+
     finally:
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)

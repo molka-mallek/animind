@@ -38,6 +38,7 @@ The platform combines multiple AI models for emotion detection, behavior classif
 - ✅ **Eye Infection Detection** — Screen for eye infections in cats and dogs using ResNet18-based classification
 - ✅ **Chicken Fowlpox Detection** — Identify fowlpox disease in poultry using EfficientNet-B0 architecture
 - ✅ **Bird Droppings Analysis** — Assess bird health through fecal matter analysis using ResNet18
+- ✅ **Skin Anomaly Detection** — Detect and segment skin diseases in cats and dogs using U-Net with medical-grade visualization
 - ✅ **Multi-Modal Analysis** — Support for image, video, and sensor data inputs
 - ✅ **Interactive Dashboard** — Streamlit-based real-time monitoring interface
 - ✅ **REST API** — FastAPI backend for scalable deployment
@@ -48,7 +49,6 @@ The platform combines multiple AI models for emotion detection, behavior classif
 - 🔜 **Behavioral Disease Detection** — Identify neurological and behavioral disorders
 - 🔜 **Dog Vocalization Analysis** — Audio-based emotion detection from barks and whines
 - 🔜 **Horse Pain Detection** — Video analysis for pain and discomfort indicators
-- 🔜 **Skin Anomaly Detection** — Dermatological disease detection in dogs and cats
 - 🔜 **Multi-language Support** — Interface localization
 
 ---
@@ -84,6 +84,8 @@ The platform combines multiple AI models for emotion detection, behavior classif
 - **CNN (Convolutional Neural Networks)** — Image-based emotion recognition
 - **ResNet18** — Eye infection and bird droppings classification
 - **EfficientNet-B0** — Chicken fowlpox detection
+- **U-Net with Attention Gates** — Skin anomaly segmentation
+- **VGG16 / ResNet50** — Animal classification and anomaly detection
 - **GRU (Gated Recurrent Units)** — Time-series behavior classification
 - **Transfer Learning** — Pre-trained models for feature extraction
 - **Ensemble Methods** — Multi-model prediction aggregation
@@ -121,7 +123,8 @@ animind/
 │   │   │   ├── DogEmotion.jsx         # Dog emotion analysis UI
 │   │   │   ├── EyeInfection.jsx       # Eye infection detection UI
 │   │   │   ├── ChickenFowlpox.jsx     # Fowlpox detection UI
-│   │   │   └── BirdDroppings.jsx      # Bird droppings analysis UI
+│   │   │   ├── BirdDroppings.jsx      # Bird droppings analysis UI
+│   │   │   └── SkinAnomaly.jsx        # Skin anomaly detection UI
 │   │   ├── data/
 │   │   │   └── modules.js             # Module configuration
 │   │   ├── App.jsx                    # Root component
@@ -144,8 +147,14 @@ animind/
 │   │       ├── fowlpox_efficientnet_b0_best.pth
 │   │       ├── bird_droppings_ai_pipeline.py
 │   │       └── bird_droppings_resnet18_best.pth
+│   │   └── skin_anomaly/
+│   │       └── ai_pipeline.py         # Skin anomaly detection & segmentation
 │   ├── model/                         # Trained models
 │   │   ├── dog_emotion_best_model.keras
+│   │   ├── best_classifier.h5         # Animal classifier (cat/dog)
+│   │   ├── best_anomaly_detector.h5   # Anomaly detector
+│   │   ├── unet_segmentation.h5       # U-Net segmentation model
+│   │   ├── skin_anomaly_metadata.json # Model configuration
 │   │   └── calf_behavior/
 │   │       ├── model.keras            # GRU model
 │   │       ├── scaler.pkl             # Feature scaler
@@ -161,24 +170,47 @@ animind/
 
 ---
 
-## Getting Started
+## ⚠️ Before You Start — Download the Models
 
-### Prerequisites
+The AI model files are not included in this repo (too large for git).
 
-- **Python 3.9+** — [Download](https://www.python.org/downloads/)
-- **Node.js 18+** — [Download](https://nodejs.org/)
-- **pip** — Python package manager
-- **npm** — Node package manager
+### **Required Model Files:**
 
-### Installation
+1. **Dog Emotion Model:**
+   - Download `dog_emotion_best_model.keras` from: [Google Drive Link](https://drive.google.com/file/d/15Zh-ydHIT5wkYkUiWmHzCXhz1pB4JXmy/view?usp=sharing)
+   - Place it here: `backend/model/dog_emotion_best_model.keras`
 
-#### 1. Clone the Repository
+2. **Skin Anomaly Detection Models:**
+   - Download the skin anomaly models from: [Google Drive Link](https://drive.google.com/drive/folders/1Qa04B8OLaRj0VUHr9s5p7CVlVjYL_lEF?usp=sharing)
+   - Extract and place in `backend/model/`:
+     ```
+     backend/model/
+     ├── best_classifier.h5          # Animal classifier (cat/dog)
+     ├── best_anomaly_detector.h5    # Anomaly detector
+     ├── unet_segmentation.h5        # U-Net segmentation
+     └── skin_anomaly_metadata.json  # Already included in repo
+     ```
+
+3. **Other Models:**
+   - Eye infection, fowlpox, and bird droppings models are already included in the repository
+
+### **Quick Setup:**
 ```bash
-git clone https://github.com/your-username/animind.git
-cd animind
+# Option 1: Manual download (recommended)
+# Download from the links above and place in backend/model/
+
+# Option 2: Use download script (after adding Google Drive links)
+cd backend
+pip install gdown
+python download_models.py
 ```
 
-#### 2. Backend Setup
+---
+
+## 🚀 Running the Backend
+
+Make sure you have **Python 3.9+** installed.
+
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -209,17 +241,28 @@ npm install
 
 ⚠️ **Important:** Model files are not included in the repository due to size constraints.
 
-Download the trained models from: [[Google Drive Link / HuggingFace Link](https://drive.google.com/file/d/15Zh-ydHIT5wkYkUiWmHzCXhz1pB4JXmy/view?usp=sharing)]
+**Download the trained models:**
 
-Place them in the following structure:
-```
-backend/model/
-├── dog_emotion_best_model.keras
-└── calf_behavior/
-    ├── model.keras
-    ├── scaler.pkl
-    ├── label_encoder.pkl
-    └── model_metadata.json
+1. **Skin Anomaly Detection Models** (Required for skin anomaly module):
+   - Download from: [Google Drive Link](https://drive.google.com/drive/folders/1Qa04B8OLaRj0VUHr9s5p7CVlVjYL_lEF?usp=sharing)
+   - Extract and place in `backend/model/`:
+     ```
+     backend/model/
+     ├── best_classifier.h5          # Animal classifier (cat/dog)
+     ├── best_anomaly_detector.h5    # Anomaly detector
+     ├── unet_segmentation.h5        # U-Net segmentation
+     └── skin_anomaly_metadata.json  # Model configuration
+     ```
+
+2. **Other Models**:
+   - Dog Emotion: [Download link](https://drive.google.com/file/d/15Zh-ydHIT5wkYkUiWmHzCXhz1pB4JXmy/view?usp=sharing)
+   - Place in `backend/model/dog_emotion_best_model.keras`
+
+**Alternative - Download Script:**
+```bash
+# Run the download script (if provided)
+cd backend
+python download_models.py
 ```
 
 ### Running the Application
@@ -297,6 +340,17 @@ streamlit run calf_dashboard.py
 4. Upload a clear photo
 5. View health assessment results
 
+#### Skin Anomaly Detection
+1. Navigate to `http://localhost:5173`
+2. Click "Start Analysis"
+3. Select "Skin Anomaly Detection"
+4. Upload a close-up photo of your cat or dog's skin
+5. View the 3-step analysis:
+   - **Step 1:** Animal identification (cat/dog)
+   - **Step 2:** Anomaly detection (healthy/anomaly)
+   - **Step 3:** Affected area segmentation with medical-grade visualization
+6. Review visual indicators and veterinary recommendations
+
 #### API Usage
 ```python
 import requests
@@ -323,50 +377,48 @@ response = requests.post(
 )
 result = response.json()
 print(f"Behavior: {result['result']['behavior']}")
+
+# Skin anomaly detection
+with open('cat_skin.jpg', 'rb') as f:
+    response = requests.post(
+        'http://localhost:8000/predict-skin-anomaly',
+        files={'file': f}
+    )
+    result = response.json()
+    print(f"Animal: {result['animal_label']}")
+    print(f"Status: {result['status_label']}")
+    print(f"Confidence: {result['verdict_confidence']}%")
+    if result['segmentation_done']:
+        print(f"Affected area: {result['seg_area_pct']}%")
+```
 ```
 
 ---
 
-## Model & Methodology
+## 🧩 Available Features
 
-### Dog Emotion Recognition
-- **Architecture:** CNN with transfer learning (pre-trained on ImageNet)
-- **Input:** RGB images (224×224 pixels)
-- **Output:** 5 emotion classes (happy, sad, angry, relaxed, fearful)
-- **Preprocessing:** Face detection with YOLOv8, cropping, normalization
-- **Training:** Custom dataset with data augmentation
-- **Accuracy:** ~85% on validation set
-
-### Calf Behavior Classification
-- **Architecture:** GRU (Gated Recurrent Unit) with 2 layers
-- **Input:** 100 samples × 8 features (4 seconds at 25 Hz)
-- **Features:** accX, accY, accZ, magnitude, ODBA, VeDBA, pitch, roll
-- **Output:** 6 behavior classes (lying, standing, eating_drinking, active, social, abnormal)
-- **Dataset:** AcTBeCalf (30 calves, accelerometer data)
-- **Accuracy:** ~85-90% on validation set
-
-### Feature Engineering
-- **ODBA (Overall Dynamic Body Acceleration)** — Activity intensity metric
-- **VeDBA (Vectorial Dynamic Body Acceleration)** — Movement magnitude
-- **Pitch & Roll** — Body orientation angles
-- **Magnitude** — Total acceleration vector
-- **StandardScaler** — Feature normalization
+| Feature | Status |
+|---|---|
+| Dog Emotion Analysis (photo + video) | ✅ Ready |
+| Calf Behavior Monitoring (real-time) | ✅ Ready |
+| Eye Infection Detection (cats/dogs) | ✅ Ready |
+| Chicken Fowlpox Detection | ✅ Ready |
+| Skin Anomaly Detection & Segmentation | ✅ Ready |
+| Cat Behavior Classification | 🔜 Coming soon |
+| Rabies Detection | 🔜 Coming soon |
+| Livestock Behavior Monitoring | 🔜 Coming soon |
+| Wound Detection | 🔜 Coming soon |
+| Breed Identification | 🔜 Coming soon |
+| Activity & Vitals Tracker | 🔜 Coming soon |
+| Bird Droppings Analysis | 🔜 Coming soon |
 
 ---
 
-## Keywords
+## 🛠️ Tech Stack
 
-**Machine Learning:** deep learning, neural networks, CNN, RNN, GRU, transfer learning, computer vision, time series analysis, supervised learning, classification, feature engineering
-
-**Technologies:** Python, TensorFlow, Keras, FastAPI, React, Streamlit, OpenCV, scikit-learn, NumPy, Pandas, Vite, REST API, ASGI, Uvicorn
-
-**Application Domain:** animal behavior, emotion recognition, livestock monitoring, veterinary diagnostics, pet health, farm management, IoT sensors, accelerometer data, real-time monitoring, predictive analytics
-
-**Animals:** dog, cat, horse, bird, cattle, calf, chicken, poultry, livestock, pet
-
-**Health & Welfare:** disease detection, anomaly detection, health monitoring, behavioral analysis, pain detection, early warning system, welfare assessment
-
-**Data Processing:** image processing, video analysis, audio analysis, sensor fusion, data augmentation, normalization, feature extraction
+- **Frontend:** React 19, Vite, React Router
+- **Backend:** FastAPI, TensorFlow, OpenCV, Ultralytics YOLOv8
+- **Model:** Custom-trained Keras model (5 emotion classes)
 
 ---
 
@@ -421,6 +473,7 @@ Backend offline — please contact support
 - ✅ Eye infection detection (cats/dogs)
 - ✅ Chicken fowlpox detection
 - ✅ Bird droppings analysis
+- ✅ Skin anomaly detection & segmentation
 - ✅ REST API
 - ✅ Web interface
 - ✅ Real-time dashboard
@@ -432,10 +485,10 @@ Backend offline — please contact support
 - 🔜 Multi-language support
 
 ### Phase 3 (Q3 2026)
-- 🔜 Skin disease detection
-- 🔜 Eye disease detection
-- 🔜 Fowlpox detection
-- 🔜 Bird droppings analysis
+- 🔜 Wound detection and severity assessment
+- 🔜 Breed identification system
+- 🔜 Activity and vitals tracking
+- 🔜 Advanced analytics dashboard
 
 ### Phase 4 (Q4 2026)
 - 🔜 Mobile application (iOS/Android)

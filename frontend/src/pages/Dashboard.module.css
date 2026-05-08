@@ -102,6 +102,20 @@
   gap: 12px;
 }
 
+/* Grille spéciale pour 5 éléments avec disposition personnalisée */
+.gridFive {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* Le 5ème élément (Bird Droppings) centré sur sa propre ligne */
+.gridFive > :nth-child(5) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  max-width: 400px;
+}
+
 .card {
   background: var(--surface);
   border: 1px solid var(--border);

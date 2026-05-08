@@ -45,7 +45,7 @@ export default function ChickenFowlpox() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('/api/predict-chicken-fowlpox', { method: 'POST', body: formData })
+      const res = await fetch('http://127.0.0.1:8000/predict-chicken-fowlpox', { method: 'POST', body: formData })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       const data = await res.json()
       if (data.error) throw new Error(data.error)

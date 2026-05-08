@@ -11,3 +11,9 @@ __pycache__/
 # AI model files (too large for git)
 backend/model/*.keras
 *.keras
+backend/model/*.h5
+*.h5
+backend/model/*.pth
+*.pth
+backend/model/*.pkl
+*.pkl

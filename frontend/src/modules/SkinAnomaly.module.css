@@ -1,0 +1,489 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 40px;
+}
+
+/* ── Back ── */
+.back {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 0;
+  width: fit-content;
+  transition: color var(--transition);
+}
+.back:hover { color: var(--text); }
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.headerIcon {
+  font-size: 32px;
+  width: 58px;
+  height: 58px;
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.55;
+  max-width: 540px;
+}
+
+/* ── Pipeline steps ── */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 6px 14px;
+}
+.stepNum {
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.stepLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.stepArrow {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+/* ── Layout ── */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Panel ── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.panelTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* ── Dropzone ── */
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  min-height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--transition), background var(--transition);
+}
+.dropzone:hover,
+.dropzone.dragOver {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+.dropzone.hasFile {
+  border-style: solid;
+  border-color: var(--border);
+  cursor: default;
+}
+.dropzoneInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  pointer-events: none;
+}
+.dropzoneIcon { font-size: 34px; }
+.dropzoneText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.dropzoneHint {
+  font-size: 12px;
+  color: var(--text-light);
+}
+.preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  display: block;
+  border-radius: calc(var(--radius) - 2px);
+}
+.fileInput { display: none; }
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+.btnPrimary {
+  flex: 1;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background var(--transition);
+}
+.btnPrimary:hover:not(:disabled) { background: var(--primary-dark); }
+.btnPrimary:disabled {
+  background: var(--border);
+  color: var(--text-light);
+  cursor: not-allowed;
+}
+.btnSecondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background var(--transition);
+}
+.btnSecondary:hover { background: var(--bg); }
+
+/* ── Spinners ── */
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+.spinnerInline {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Empty state ── */
+.emptyState {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+.emptyIcon { font-size: 40px; }
+.emptyText {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.emptyHint {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+/* ── Error ── */
+.errorBox {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 22px;
+}
+.errorTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+}
+.errorMsg {
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 2px;
+}
+
+/* ── Result ── */
+.resultWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Step cards */
+.stepCard {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stepCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.stepBadge {
+  background: var(--primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.stepCardTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+
+/* Animal row */
+.animalRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.animalEmoji { font-size: 32px; flex-shrink: 0; }
+.animalLabel {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.animalConf {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.confBarMini {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.confBarMiniFill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 99px;
+  transition: width 0.7s ease;
+}
+
+/* Verdict hero */
+.verdictHero {
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.verdictRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.verdictEmoji { font-size: 32px; flex-shrink: 0; }
+.verdictLabel {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.verdictDesc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.confidencePill {
+  margin-left: auto;
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Probability bars */
+.probBars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.probBarRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.probBarLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 56px;
+  flex-shrink: 0;
+}
+.probBarTrack {
+  flex: 1;
+  height: 7px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.probBarFill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.7s ease;
+}
+.probBarValue {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  width: 38px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Segmentation overlay */
+.segOverlay {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  display: block;
+  object-fit: contain;
+  max-height: 220px;
+}
+.segAreaText {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Info blocks */
+.infoBlock {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.adviceBlock {
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.infoBlockHeader {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.infoBlockIcon { font-size: 15px; }
+.infoBlockTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+}
+.infoBlockText {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Cue list */
+.cueList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cueItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+.cueDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 820px) {
+  .layout { grid-template-columns: 1fr; }
+  .steps  { gap: 6px; }
+}

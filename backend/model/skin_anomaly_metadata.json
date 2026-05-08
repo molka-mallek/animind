@@ -1,0 +1,30 @@
+{
+  "img_size": [
+    224,
+    224
+  ],
+  "classification_classes": {
+    "cats": 0,
+    "dogs": 1
+  },
+  "anomaly_classes": {
+    "anomaly": 0,
+    "healthy": 1
+  },
+  "anomaly_idx": 0,
+  "best_classifier": "VGG16",
+  "best_anomaly_detector": "VGG16",
+  "best_classifier_metrics": {
+    "accuracy": 0.9539473684210527,
+    "f1": 0.9523809523809523
+  },
+  "best_anomaly_metrics": {
+    "accuracy": 0.859504132231405,
+    "f1": 0.8859060402684564
+  },
+  "unet_metrics": {
+    "iou": 0.7262986898422241,
+    "dice": 0.8414519429206848,
+    "pixel_acc": 0.8022580516581632
+  }
+} 
