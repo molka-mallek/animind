@@ -49,6 +49,14 @@ export const modules = [
     tag: 'Available',
     route: '/modules/bird-droppings',
   },
+  {
+    id: 'rabies',
+    title: 'Rabies Detection',
+    description: 'Upload a clear animal photo to screen for rabies-related symptoms and get a confidence score.',
+    icon: '🧬',
+    tag: 'Available',
+    route: '/rabies',
+  },
   
   // ── COMING SOON ──
   {
@@ -80,14 +88,6 @@ export const modules = [
     title: 'Horse Pain Detection',
     description: 'Detect signs of pain or discomfort in horses through video analysis of movement and facial expressions.',
     icon: '🐴',
-    tag: 'Coming Soon',
-    route: null,
-  },
-  {
-    id: 'rabies',
-    title: 'Detect unusual behavior',
-    description: 'Concerned about your animal acting strangely? Get a quick behavioral assessment.',
-    icon: '⚠️',
     tag: 'Coming Soon',
     route: null,
   },
