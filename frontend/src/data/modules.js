@@ -53,11 +53,19 @@ export const modules = [
   // ── COMING SOON ──
   {
     id: 'cat-behavior',
-    title: 'Cat Behavior Classification',
-    description: 'Analyze your cat\'s behavior patterns and emotional state from photos or videos.',
+    title: 'Cat Sound Classification',
+    description: 'Upload an audio recording of your cat to identify its vocalization — happy, angry, paining, resting, and more.',
     icon: '🐱',
-    tag: 'Coming Soon',
-    route: null,
+    tag: 'Available',
+    route: '/modules/cat-sound',
+  },
+  {
+    id: 'thermal-cat',
+    title: 'Thermal Cat Health Screening',
+    description: 'Upload a thermal image of your cat to screen for signs of illness using an AI ensemble of three deep learning models.',
+    icon: '🌡️',
+    tag: 'Available',
+    route: '/modules/thermal-cat',
   },
   {
     id: 'behavioral-disease',
@@ -80,8 +88,8 @@ export const modules = [
     title: 'Horse Pain Detection',
     description: 'Detect signs of pain or discomfort in horses through video analysis of movement and facial expressions.',
     icon: '🐴',
-    tag: 'Coming Soon',
-    route: null,
+    tag: 'Available',
+    route: '/modules/horse-pain',
   },
   {
     id: 'rabies',

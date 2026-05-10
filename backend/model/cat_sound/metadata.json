@@ -1,0 +1,67 @@
+{
+  "class_names": [
+    "Angry",
+    "Defence",
+    "Fighting",
+    "Happy",
+    "HuntingMind",
+    "Mating",
+    "MotherCall",
+    "Paining",
+    "Resting",
+    "Warning"
+  ],
+  "name_to_label": {
+    "Angry": 0,
+    "Defence": 1,
+    "Fighting": 2,
+    "Happy": 3,
+    "HuntingMind": 4,
+    "Mating": 5,
+    "MotherCall": 6,
+    "Paining": 7,
+    "Resting": 8,
+    "Warning": 9
+  },
+  "label_map": {
+    "0": "Angry",
+    "1": "Defence",
+    "2": "Fighting",
+    "3": "Happy",
+    "4": "HuntingMind",
+    "5": "Mating",
+    "6": "MotherCall",
+    "7": "Paining",
+    "8": "Resting",
+    "9": "Warning"
+  },
+  "class_tier": {
+    "Paining": 1,
+    "Defence": 2,
+    "Warning": 2,
+    "Fighting": 2,
+    "Angry": 2,
+    "Happy": 3,
+    "Resting": 3,
+    "MotherCall": 3,
+    "HuntingMind": 4,
+    "Mating": 4
+  },
+  "tier_colors": {
+    "1": "#d62728",
+    "2": "#ff7f0e",
+    "3": "#2ca02c",
+    "4": "#7f7f7f"
+  },
+  "clinical_priority": [
+    "Paining",
+    "Fighting",
+    "Defence",
+    "Warning",
+    "Angry"
+  ],
+  "target_sr": 16000,
+  "target_samples": 32000,
+  "pain_threshold": 0.35,
+  "yamnet_embedding_dim": 1024
+}

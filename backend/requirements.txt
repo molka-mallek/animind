@@ -1,15 +1,36 @@
+# ============================================================
+# AniMind Backend — Unified Requirements
+# ============================================================
+
+# ── Web server ───────────────────────────────────────────────
 fastapi>=0.104.0
 uvicorn>=0.24.0
-tensorflow>=2.14.0
-pillow>=10.0.0
-numpy>=1.24.0
 python-multipart>=0.0.6
+
+# ── Shared numerics (numpy<2 required by TensorFlow) ────────
+numpy>=1.24.0
+
+# ── PyTorch stack (Dog Emotion, Eye Infection, Thermal Cat,
+#    Horse Pain, Skin Anomaly, Bird Droppings, Chicken) ───────
+torch>=2.0.0
+torchvision>=0.15.0
+Pillow>=10.0.0
 opencv-python>=4.8.0
 ultralytics>=8.0.0
 scikit-learn>=1.3.0
+
+# ── TensorFlow stack (Cat Sound — YAMNet + head network) ────
+tensorflow>=2.20.0
+tensorflow-hub>=0.14.0
+tf-keras                        # stable Keras 2 API for head model rebuild
+h5py>=3.9.0                     # direct weight loading (Keras 3 format fix)
+librosa>=0.10.0                 # audio loading & resampling
+soundfile                       # audio backend for librosa
+
+# ── Calf dashboard (Streamlit) ───────────────────────────────
 streamlit>=1.32.0
+
+# ── Utilities ───────────────────────────────────────────────
 requests>=2.31.0
 matplotlib>=3.7.0
 pandas>=2.0.0
-torch>=2.0.0
-torchvision>=0.15.0

@@ -9,6 +9,9 @@ import EyeInfection from './modules/EyeInfection'
 import ChickenFowlpox from './modules/ChickenFowlpox'
 import BirdDroppings from './modules/BirdDroppings'
 import SkinAnomaly from './modules/SkinAnomaly'
+import HorsePain from './modules/HorsePain'
+import CatSound from './modules/CatSound'
+import ThermalCat from './modules/ThermalCat'
 
 export default function App() {
   return (
@@ -22,7 +25,10 @@ export default function App() {
           <Route path="modules/eye-infection" element={<EyeInfection />} />
           <Route path="modules/chicken-fowlpox" element={<ChickenFowlpox />} />
           <Route path="modules/bird-droppings" element={<BirdDroppings />} />
-          <Route path="modules/skin-anomaly" element={<SkinAnomaly />} />
+          <Route path="modules/skin-anomaly"    element={<SkinAnomaly />} />
+          <Route path="modules/horse-pain"      element={<HorsePain />} />
+          <Route path="modules/cat-sound"       element={<CatSound />} />
+          <Route path="modules/thermal-cat"     element={<ThermalCat />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

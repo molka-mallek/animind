@@ -7,7 +7,9 @@ __pycache__/
 
 # Environment variables (passwords, API keys)
 .env
+venv
 
+.vscode
 # AI model files (too large for git)
 backend/model/*.keras
 *.keras

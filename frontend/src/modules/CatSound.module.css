@@ -1,0 +1,119 @@
+/* ── CatSound.module.css ── mirrors HorsePain structure ── */
+
+.page { display: flex; flex-direction: column; gap: 24px; padding-bottom: 40px; }
+
+.back {
+  background: none; border: none; font-size: 13px; font-weight: 500;
+  color: var(--text-muted); padding: 0; width: fit-content;
+  transition: color var(--transition); cursor: pointer;
+}
+.back:hover { color: var(--text); }
+
+.header { display: flex; align-items: center; gap: 16px; }
+.headerIcon {
+  font-size: 32px; width: 58px; height: 58px;
+  background: var(--primary-light); border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.title { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+.subtitle {
+  font-size: 13px; color: var(--text-muted); margin-top: 4px;
+  line-height: 1.55; max-width: 520px;
+}
+
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+
+.panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 22px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.panelTitle {
+  font-size: 13px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.07em;
+}
+
+.dropzone {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  min-height: 200px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; overflow: hidden;
+  transition: border-color var(--transition), background var(--transition);
+}
+.dropzone:hover, .dropzone.dragOver { border-color: var(--primary); background: var(--primary-light); }
+.dropzone.hasFile { border-style: solid; border-color: var(--border); cursor: default; }
+
+.dropzoneInner { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px; text-align: center; pointer-events: none; }
+.dropzoneIcon { font-size: 34px; }
+.dropzoneText  { font-size: 14px; font-weight: 500; color: var(--text); }
+.dropzoneHint  { font-size: 12px; color: var(--text-light); }
+
+.audioPreview {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 28px;
+}
+.audioIcon { font-size: 42px; }
+.audioName { font-size: 13px; font-weight: 500; color: var(--text); text-align: center; word-break: break-all; }
+.playBtn {
+  background: var(--primary); color: #fff; border: none;
+  border-radius: 99px; padding: 8px 22px; font-size: 13px;
+  font-weight: 600; cursor: pointer; transition: background var(--transition);
+}
+.playBtn:hover { background: var(--primary-dark); }
+
+.fileInput { display: none; }
+
+.actions { display: flex; gap: 10px; }
+.btnPrimary {
+  flex: 1; background: var(--primary); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: 11px 18px; font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background var(--transition); cursor: pointer;
+}
+.btnPrimary:hover:not(:disabled) { background: var(--primary-dark); }
+.btnPrimary:disabled { background: var(--border); color: var(--text-light); cursor: not-allowed; }
+.btnSecondary {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 11px 18px; font-size: 14px; font-weight: 600;
+  transition: background var(--transition); cursor: pointer;
+}
+.btnSecondary:hover { background: var(--bg); }
+
+.spinner { width: 30px; height: 30px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.spinnerInline { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.emptyState { min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; }
+.emptyIcon  { font-size: 40px; }
+.emptyText  { font-size: 14px; font-weight: 500; color: var(--text); }
+.emptyHint  { font-size: 12px; color: var(--text-light); }
+
+.errorBox { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; font-size: 22px; }
+.errorTitle { font-size: 13px; font-weight: 600; color: #dc2626; }
+.errorMsg   { font-size: 12px; color: #ef4444; margin-top: 2px; }
+
+.resultWrap { display: flex; flex-direction: column; gap: 14px; }
+
+.conditionHero {
+  display: flex; align-items: center; gap: 14px;
+  border: 1px solid; border-radius: var(--radius); padding: 16px 18px;
+}
+.conditionEmoji   { font-size: 36px; flex-shrink: 0; }
+.conditionLabel   { font-size: 20px; font-weight: 800; letter-spacing: 0.04em; line-height: 1; }
+.conditionSub     { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.confidencePill   { margin-left: auto; border-radius: 99px; padding: 5px 14px; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+
+.infoBlock { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.infoBlockHeader { display: flex; align-items: center; gap: 7px; }
+.infoBlockIcon   { font-size: 15px; }
+.infoBlockTitle  { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+
+.barRow  { display: flex; flex-direction: column; gap: 5px; }
+.barLabel { display: flex; justify-content: space-between; font-size: 13px; color: var(--text); font-weight: 500; }
+.barTrack { height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.barFill  { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
+
+.miniGrid  { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.miniCell  { display: flex; justify-content: space-between; align-items: center; background: var(--surface); border-radius: var(--radius-sm); padding: 7px 10px; }
+.miniLabel { font-size: 12px; color: var(--text); }
+.miniValue { font-size: 12px; font-weight: 700; }
+
+@media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
