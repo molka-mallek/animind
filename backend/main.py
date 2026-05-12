@@ -23,6 +23,8 @@ predict_bird_droppings = None
 _bird_droppings_pipeline_error = None
 predict_skin_anomaly = None
 _skin_anomaly_pipeline_error = None
+predict_ataxia = None
+_ataxia_pipeline_error = None
 
 
 def _ensure_dog_pipeline_loaded():
@@ -165,6 +167,21 @@ def _ensure_skin_anomaly_pipeline_loaded():
         return err
     predict_skin_anomaly = func
     return None
+
+
+def _ensure_ataxia_pipeline_loaded():
+    global predict_ataxia, _ataxia_pipeline_error
+    if predict_ataxia is not None:
+        return None
+    if _ataxia_pipeline_error is not None:
+        return _ataxia_pipeline_error
+    try:
+        from modules.ataxia.ai_pipeline import predict_ataxia as _predict_ataxia
+        predict_ataxia = _predict_ataxia
+        return None
+    except Exception as e:
+        _ataxia_pipeline_error = str(e)
+        return _ataxia_pipeline_error
 
 # ─────────────────────────────────────────────
 # APP INIT
@@ -468,6 +485,35 @@ async def predict_skin_anomaly_api(file: UploadFile = File(...)):
     except Exception as e:
         return {"error": str(e)}
 
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# ATAXIA / BEHAVIORAL DISEASE PREDICTION
+# ─────────────────────────────────────────────
+@app.post("/predict-ataxia")
+async def predict_ataxia_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        ataxia_error = _ensure_ataxia_pipeline_loaded()
+        if ataxia_error:
+            return {"error": f"Ataxia model unavailable: {ataxia_error}"}
+
+        contents  = await file.read()
+        ext       = Path(file.filename).suffix or ".mp4"
+        temp_path = f"temp_{uuid.uuid4().hex}{ext}"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+
+        result = predict_ataxia(temp_path)
+        return result
+
+    except ValueError as e:
+        return {"error": str(e)}
+    except Exception as e:
+        return {"error": f"Inference failed: {str(e)}"}
     finally:
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)

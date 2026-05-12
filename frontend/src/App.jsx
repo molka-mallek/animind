@@ -9,6 +9,7 @@ import EyeInfection from './modules/EyeInfection'
 import ChickenFowlpox from './modules/ChickenFowlpox'
 import BirdDroppings from './modules/BirdDroppings'
 import SkinAnomaly from './modules/SkinAnomaly'
+import BehavioralDisease from './modules/BehavioralDisease'
 import RabiesDetection from './modules/RabiesDetection'
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="modules/chicken-fowlpox" element={<ChickenFowlpox />} />
           <Route path="modules/bird-droppings" element={<BirdDroppings />} />
           <Route path="modules/skin-anomaly" element={<SkinAnomaly />} />
+          <Route path="modules/behavioral-disease" element={<BehavioralDisease />} />
           <Route path="rabies" element={<RabiesDetection />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

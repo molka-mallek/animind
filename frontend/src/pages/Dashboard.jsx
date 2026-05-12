@@ -3,20 +3,22 @@ import { modules } from '../data/modules'
 import styles from './Dashboard.module.css'
 
 const stats = [
-  { icon: '🔍', value: '7', label: 'Behavior checks available' },
+  { icon: '🔍', value: '8', label: 'Behavior checks available' },
   { icon: '🐾', value: '4+', label: 'Animal types supported' },
   { icon: '⚡', value: 'Fast', label: 'Results in seconds' },
   { icon: '🚀', value: 'Beta', label: 'New checks coming soon' },
 ]
 
+// Quick-access: all available modules
+const quickModules = modules.filter(m => m.route || m.external)
+
 export default function Dashboard() {
   const navigate = useNavigate()
-  const availableModules = modules.filter(mod => mod.route || mod.external).slice(0, 5)
-  const gridClass = availableModules.length === 5 ? styles.gridFive : styles.grid
 
   return (
     <div className={styles.page}>
 
+      {/* ── Header ── */}
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Welcome back 👋</h1>
@@ -27,7 +29,7 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* Stats */}
+      {/* ── Stats ── */}
       <div className={styles.statsGrid}>
         {stats.map((s) => (
           <div key={s.label} className={styles.statCard}>
@@ -40,7 +42,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Quick access */}
+      {/* ── Quick access ── */}
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>What do you want to check?</h2>
@@ -48,8 +50,8 @@ export default function Dashboard() {
             See all →
           </button>
         </div>
-        <div className={gridClass}>
-          {availableModules.map((mod) => (
+        <div className={styles.grid}>
+          {quickModules.map((mod) => (
             <div
               key={mod.id}
               className={styles.card}
@@ -64,7 +66,7 @@ export default function Dashboard() {
                 <p className={styles.cardDesc}>{mod.description}</p>
               </div>
               <div className={styles.cardArrow}>
-                {mod.route ? '→' : mod.external ? <span className={styles.ext}>↗</span> : <span className={styles.soon}>Soon</span>}
+                {mod.route ? '→' : mod.external ? <span className={styles.ext}>↗</span> : null}
               </div>
             </div>
           ))}

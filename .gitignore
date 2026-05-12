@@ -17,3 +17,5 @@ backend/model/*.pth
 *.pth
 backend/model/*.pkl
 *.pkl
+backend/model/*.pt
+*.pt

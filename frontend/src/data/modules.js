@@ -72,8 +72,8 @@ export const modules = [
     title: 'Behavioral Disease Classification',
     description: 'Detect potential behavioral disorders or neurological issues in dogs and cats.',
     icon: '🧠',
-    tag: 'Coming Soon',
-    route: null,
+    tag: 'Available',
+    route: '/modules/behavioral-disease',
   },
   {
     id: 'dog-vocalization',

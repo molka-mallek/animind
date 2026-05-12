@@ -4,6 +4,7 @@
   gap: 36px;
 }
 
+/* ── Header ── */
 .header {
   display: flex;
   align-items: flex-start;
@@ -38,7 +39,7 @@
 }
 .ctaBtn:hover { background: var(--primary-dark); }
 
-/* Stats */
+/* ── Stats ── */
 .statsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -70,7 +71,7 @@
   margin-top: 3px;
 }
 
-/* Section */
+/* ── Section ── */
 .section { display: flex; flex-direction: column; gap: 16px; }
 
 .sectionHeader {
@@ -95,27 +96,14 @@
 }
 .viewAll:hover { opacity: 0.75; }
 
-/* Cards */
+/* ── Quick-access grid — single column stack ── */
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 
-/* Grille spéciale pour 5 éléments avec disposition personnalisée */
-.gridFive {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-/* Le 5ème élément (Bird Droppings) centré sur sa propre ligne */
-.gridFive > :nth-child(5) {
-  grid-column: 1 / -1;
-  justify-self: center;
-  max-width: 400px;
-}
-
+/* ── Module card ── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -131,16 +119,6 @@
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
   border-color: var(--primary-mid);
-}
-
-.cardDisabled {
-  opacity: 0.6;
-  cursor: default;
-}
-.cardDisabled:hover {
-  box-shadow: none;
-  transform: none;
-  border-color: var(--border);
 }
 
 .cardIcon { font-size: 28px; flex-shrink: 0; }
@@ -175,20 +153,7 @@
   font-weight: 700;
 }
 
-.soon {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-light);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  padding: 2px 8px;
-}
-
+/* ── Responsive ── */
 @media (max-width: 900px) {
   .statsGrid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 600px) {
-  .grid { grid-template-columns: 1fr; }
 }
