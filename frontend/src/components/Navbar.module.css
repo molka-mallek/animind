@@ -29,6 +29,12 @@
   gap: 9px;
 }
 
+.logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
 .brandMark {
   width: 30px;
   height: 30px;

@@ -14,7 +14,7 @@ Download the zip below, extract it, and place the files in this folder.
 ## After downloading
 
 1. Extract the zip
-2. Place all 3 files in `backend/model/thermal_cat/` so it looks like this:
+2. Place all 3 files in `backend/model/thermal_cat/`:
 
 ```
 backend/model/thermal_cat/
@@ -28,6 +28,37 @@ backend/model/thermal_cat/
 
 ---
 
+## Dependencies
+
+Already included in `requirements.txt` — no extra installs needed:
+
+```
+torch>=2.2.0
+torchvision>=0.17.0
+pillow>=10.2.0
+numpy>=1.26.0
+```
+
+---
+
+## How to start the backend
+
+⚠️ Always use this command — **not** plain `uvicorn`:
+
+```cmd
+cd backend
+venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000
+```
+
+Or use the provided script:
+
+```cmd
+cd backend
+start.bat
+```
+
+---
+
 ## What this model does
 
 Classifies thermal cat images as **Healthy** or **Sick** using an ensemble of 3 models:
@@ -35,4 +66,7 @@ Classifies thermal cat images as **Healthy** or **Sick** using an ensemble of 3 
 - `efficientnet_b3.pth` — EfficientNet-B3 (weight: 50%)
 - `resnet50.pth` — ResNet50 (weight: 30%)
 
-Accepts **PNG, JPG, WEBP** thermal images (RGB).
+- Classification threshold: **56%** sick probability
+- Optimized for **high recall** (minimizes false negatives)
+- Accepts **PNG, JPG, WEBP** thermal images (RGB, not grayscale)
+- Runs fully offline — no internet required after model placement

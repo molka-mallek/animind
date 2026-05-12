@@ -10,6 +10,7 @@ import numpy as np
 SCRIPT_DIR   = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR    = os.path.join(os.path.dirname(os.path.dirname(SCRIPT_DIR)), "model", "cat_sound")
 HEAD_MODEL   = os.path.join(MODEL_DIR, "head_model.keras")
+HEAD_WEIGHTS = os.path.join(MODEL_DIR, "model.weights.h5")  # extracted from .keras zip
 METADATA     = os.path.join(MODEL_DIR, "metadata.json")
 YAMNET_CACHE = os.path.join(MODEL_DIR, "yamnet_cache")
 
@@ -50,8 +51,8 @@ def _load_models():
         return
 
     import tensorflow_hub as hub
+    import h5py
 
-    # TF 2.20 — use tf_keras or keras directly
     try:
         import tf_keras as keras
     except ImportError:
@@ -59,7 +60,25 @@ def _load_models():
 
     os.environ.setdefault("TFHUB_CACHE_DIR", YAMNET_CACHE)
     _yamnet = hub.load("https://tfhub.dev/google/yamnet/1")
-    _head   = keras.models.load_model(HEAD_MODEL)
+
+    # Build exact architecture from config.json inside the .keras file
+    inp   = keras.Input(shape=(1024,), name="yamnet_embedding")
+    x     = keras.layers.Dense(512, activation="relu",    name="dense_6")(inp)
+    x     = keras.layers.Dropout(0.3,                     name="dropout_4")(x)
+    x     = keras.layers.Dense(256, activation="relu",    name="dense_7")(x)
+    x     = keras.layers.Dropout(0.3,                     name="dropout_5")(x)
+    out   = keras.layers.Dense(10,  activation="softmax", name="dense_8")(x)
+    _head = keras.Model(inp, out, name="yamnet_head")
+
+    # Load weights manually from Keras 3 h5 format
+    # Keys: layers/dense/vars/0 (kernel), layers/dense/vars/1 (bias)
+    with h5py.File(HEAD_WEIGHTS, "r") as f:
+        dense_layers = [l for l in _head.layers if isinstance(l, keras.layers.Dense)]
+        h5_keys      = ["dense", "dense_1", "dense_2"]
+        for layer, key in zip(dense_layers, h5_keys):
+            kernel = f[f"layers/{key}/vars/0"][:]
+            bias   = f[f"layers/{key}/vars/1"][:]
+            layer.set_weights([kernel, bias])
 
 
 def _preprocess(path: str) -> "np.ndarray":

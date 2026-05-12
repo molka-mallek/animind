@@ -358,11 +358,9 @@ with right_col:
         # Alert section — read from backend response
         if res_data.get('alert'):
             alert_type = res_data.get('alert_type', 'unknown')
-            if alert_type == 'low_confidence':
-                st.error(f"⚠️ Uncertain detection — {selected_calf} | Certainty: {conf:.0%}")
-            elif alert_type == 'instability':
+            if alert_type == 'instability':
                 st.error(f"⚠️ Behavior instability detected — {selected_calf}")
-            else:
+            elif alert_type not in ['low_confidence']:
                 st.error(f"⚠️ Alert: {alert_type}")
         
         # Event detection
@@ -438,5 +436,5 @@ if simulate_sensor and backend_online:
                 })
     
     # ── 5. Wait then rerun ─────────────────────────────────────────────────────
-    time.sleep(0.16)  # ~25 Hz sampling rate (1/25 ≈ 0.04s, but we slow it down for visibility)
+    time.sleep(0.05)  # Faster sampling for demo (~20 Hz)
     st.rerun()

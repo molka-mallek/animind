@@ -46,19 +46,21 @@ The platform combines multiple AI models for emotion detection, behavior classif
 - ✅ **Bird Droppings Analysis** — Assess bird health through fecal matter analysis using ResNet18
 - ✅ **Skin Anomaly Detection** — Detect and segment skin diseases in cats and dogs using U-Net with medical-grade visualization
 - ✅ **Behavioral Disease Detection** — Detect neurological and behavioral disorders in dogs and cats via video (ST-GCN + YOLO-Pose)
-- ✅ **Rabies Detection** — Screen for rabies-related symptoms from animal photos
+- ✅ **Rabies Detection** — Screen for rabies-related symptoms from animal photos using EfficientNet-B0
 - ✅ **Fish Freshness Analysis** — Grade fish freshness (C1/C2/C3, score 0–100) using YOLO ROI detection + SAM2 segmentation + DualStream EfficientNet-B0
 - ✅ **Bird Species Classification** — Identify bird species from audio recordings using mel-spectrogram analysis and a custom BirdCNN (5 species)
-- ✅ **Multi-Modal Analysis** — Support for image, video, audio, and sensor data inputs
-- ✅ **Interactive Dashboard** — Streamlit-based real-time calf monitoring interface
+- ✅ **Cat Vocalization Analysis** — Classify cat sounds into 10 behavioral categories with pain detection
+- ✅ **Horse Pain Detection** — Identify pain indicators through BiLSTM behavioral analysis from video
+- ✅ **Thermal Cat Health Screening** — Screen for health issues using thermal imaging with ensemble AI (ResNet50, EfficientNet-B3, Custom CNN)
+- ✅ **Multi-Modal Analysis** — Support for image, video, audio, thermal, and sensor data inputs
+- ✅ **Interactive Dashboard** — Streamlit-based real-time calf monitoring interface with intelligent alerts
 - ✅ **REST API** — FastAPI backend for scalable deployment
 - ✅ **Responsive Web Interface** — React-based frontend for easy access
 
 ### Upcoming Features (In Development)
-- 🔜 **Cat Behavior Classification** — Emotion and activity recognition for cats
-- 🔜 **Dog Vocalization Analysis** — Audio-based emotion detection from barks and whines
-- 🔜 **Horse Pain Detection** — Video analysis for pain and discomfort indicators
 - 🔜 **Multi-language Support** — Interface localization
+- 🔜 **Historical Data Analytics** — Long-term behavior trend analysis
+- 🔜 **Mobile Application** — iOS and Android apps for on-the-go monitoring
 
 ---
 
@@ -244,8 +246,22 @@ The AI model files are not included in this repo (too large for git).
      └── skin_anomaly_metadata.json  # Already included in repo
      ```
 
-4. **Other Models:**
-   - Eye infection, fowlpox, and bird droppings models are already included in the repository
+4. **Behavioral Disease Detection Models:**
+   - Download from your teammate or contact project maintainers
+   - Place in `backend/`:
+     ```
+     backend/
+     ├── yolo11n-pose.pt              ← YOLO pose detection model
+     └── model/
+         └── stgcn_multiclass.pth     ← ST-GCN model for gait analysis
+     ```
+
+5. **Rabies Detection Model:**
+   - Model file: `rabies_efficientnet_b0_best.pth`
+   - Already included in: `backend/modules/rabies_detection/`
+
+6. **Other Models:**
+   - Eye infection, fowlpox, bird droppings, cat sound, horse pain, and thermal cat models are already included in their respective module folders
 
 ### **Quick Setup:**
 ```bash

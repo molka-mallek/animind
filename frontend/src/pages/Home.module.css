@@ -57,13 +57,6 @@
   max-width: 600px;
 }
 
-.heroActions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .btnPrimary {
   background: var(--primary);
   color: #fff;
@@ -79,51 +72,6 @@
   background: var(--primary-dark);
   transform: translateY(-1px);
 }
-
-.btnGhost {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 13px 4px;
-  transition: color var(--transition);
-}
-.btnGhost:hover { color: var(--text); }
-
-.heroStats {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding-top: 4px;
-}
-
-.heroStat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.heroStatNum {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.5px;
-}
-
-.heroStatLabel {
-  font-size: 11px;
-  color: var(--text-light);
-  font-weight: 500;
-}
-
-.heroStatDivider {
-  width: 1px;
-  height: 32px;
-  background: var(--border);
-}
-
-/* Hero visual card - REMOVED */
 
 /* ── SECTIONS ── */
 .section {
@@ -322,8 +270,6 @@
   .page { gap: 36px; }
   .heroTitle { font-size: 28px; letter-spacing: -0.5px; }
   .heroSub { font-size: 14px; }
-  .heroStats { gap: 12px; }
-  .heroStatNum { font-size: 17px; }
   .featuresGrid { grid-template-columns: 1fr; }
   .audienceCard { padding: 22px 18px; }
   .ctaTitle { font-size: 20px; }

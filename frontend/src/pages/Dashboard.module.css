@@ -13,6 +13,30 @@
   gap: 16px;
 }
 
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerLogo {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .title {
   font-size: 26px;
   font-weight: 800;

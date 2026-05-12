@@ -1,20 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './Home.module.css'
 
-const petFeatures = [
-  { icon: '🐶', text: 'Dog emotion analysis (photo/video)' },
-  { icon: '🐱', text: 'Cat behavior classification' },
-  { icon: '🐴', text: 'Horse pain detection (video)' },
-  { icon: '🐦', text: 'Bird health monitoring' },
-]
-
-const farmerFeatures = [
-  { icon: '🐄', text: 'Real-time calf behavior monitoring' },
-  { icon: '📊', text: 'Track herd patterns over time' },
-  { icon: '⚡', text: 'Early detection of unusual activity' },
-  { icon: '🩺', text: 'Health alerts and recommendations' },
-]
-
 export default function Home() {
   const navigate = useNavigate()
 
@@ -24,87 +10,83 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
-          <span className={styles.heroBadge}>🐾 For pet owners & farmers</span>
+          <span className={styles.heroBadge}>🎓 Esprit School of Engineering Project</span>
           <h1 className={styles.heroTitle}>
             Understand your animal<br />
             <span className={styles.heroAccent}>like never before</span>
           </h1>
           <p className={styles.heroSub}>
-            Upload a photo or video and get clear, simple insights about
-            how your animal feels — no expertise needed.
+            Upload a photo or audio and get instant AI-powered insights about your pet or livestock's health, emotions, and behavior.
           </p>
-          <div className={styles.heroActions}>
-            <button className={styles.btnPrimary} onClick={() => navigate('/modules')}>
-              Start Analysis
-            </button>
-            <button className={styles.btnGhost} onClick={() => navigate('/dashboard')}>
-              See how it works ↓
-            </button>
-          </div>
-
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatNum}>7</span>
-              <span className={styles.heroStatLabel}>Behavior checks</span>
-            </div>
-            <div className={styles.heroStatDivider} />
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatNum}>4+</span>
-              <span className={styles.heroStatLabel}>Animal types</span>
-            </div>
-            <div className={styles.heroStatDivider} />
-            <div className={styles.heroStat}>
-              <span className={styles.heroStatNum}>Fast</span>
-              <span className={styles.heroStatLabel}>Results in seconds</span>
-            </div>
-          </div>
+          <button className={styles.btnPrimary} onClick={() => navigate('/modules')}>
+            Analyze my animal →
+          </button>
         </div>
-
-
       </section>
 
-      {/* ── WHO IT'S FOR ── */}
+      {/* ── AUDIENCE ── */}
       <section className={styles.section}>
-        <div className={styles.sectionLabel}>Who it's for</div>
-        <h2 className={styles.sectionTitle}>Built for the people who care most</h2>
+        <div className={styles.sectionLabel}>Built for the people who care most</div>
         <div className={styles.audienceGrid}>
 
+          {/* Pet Owners */}
           <div className={`${styles.audienceCard} ${styles.audiencePet}`}>
             <div className={styles.audienceHeader}>
-              <span className={styles.audienceEmoji}>🐾</span>
+              <span className={styles.audienceEmoji}>🐶</span>
               <div>
-                <h3 className={styles.audienceTitle}>Pet Owners</h3>
-                <p className={styles.audienceTagline}>Understand your animals</p>
+                <p className={styles.audienceTitle}>Pet Owners</p>
+                <p className={styles.audienceTagline}>Deepen your bond</p>
               </div>
             </div>
             <ul className={styles.featureList}>
-              {petFeatures.map((f) => (
-                <li key={f.text} className={styles.featureItem}>
-                  <span className={styles.featureIcon}>{f.icon}</span>
-                  <span>{f.text}</span>
-                </li>
-              ))}
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>😊</span>
+                Know if your pet is happy, stressed, or anxious
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>🩺</span>
+                Spot skin issues or injuries before they worsen
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>❤️</span>
+                Strengthen your bond through better understanding
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>🚨</span>
+                Get alerts when something seems off
+              </li>
             </ul>
             <button className={styles.audienceBtn} onClick={() => navigate('/modules')}>
-              Analyze my animal →
+              Analyze my pet →
             </button>
           </div>
 
+          {/* Farmers */}
           <div className={`${styles.audienceCard} ${styles.audienceFarmer}`}>
             <div className={styles.audienceHeader}>
               <span className={styles.audienceEmoji}>🌾</span>
               <div>
-                <h3 className={styles.audienceTitle}>Farmers</h3>
-                <p className={styles.audienceTagline}>Monitor your livestock</p>
+                <p className={styles.audienceTitle}>Farmers</p>
+                <p className={styles.audienceTagline}>Protect your herd</p>
               </div>
             </div>
             <ul className={styles.featureList}>
-              {farmerFeatures.map((f) => (
-                <li key={f.text} className={styles.featureItem}>
-                  <span className={styles.featureIcon}>{f.icon}</span>
-                  <span>{f.text}</span>
-                </li>
-              ))}
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>📊</span>
+                Track herd behavior patterns over time
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>⚡</span>
+                Catch unusual activity early
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>🐄</span>
+                Monitor multiple animals at once
+              </li>
+              <li className={styles.featureItem}>
+                <span className={styles.featureIcon}>📋</span>
+                Get actionable care recommendations
+              </li>
             </ul>
             <button className={styles.audienceBtn} onClick={() => navigate('/modules')}>
               Monitor my livestock →
@@ -116,25 +98,69 @@ export default function Home() {
 
       {/* ── FEATURES ── */}
       <section className={styles.section}>
-        <div className={styles.sectionLabel}>What you get</div>
-        <h2 className={styles.sectionTitle}>Everything you need to know</h2>
+        <div className={styles.sectionLabel}>What we can detect</div>
+        <h2 className={styles.sectionTitle}>Powered by specialized AI models</h2>
         <div className={styles.featuresGrid}>
-          {[
-            { icon: '👁️', title: 'Visual cues explained', desc: 'We break down exactly what your animal\'s body language means in plain language.' },
-            { icon: '💬', title: 'Clear recommendations', desc: 'Every analysis ends with a simple action you can take right now.' },
-            { icon: '📸', title: 'Photos and videos', desc: 'Works with a quick snapshot or a short video clip — whatever you have.' },
-            { icon: '⚡', title: 'Results in seconds', desc: 'No waiting. Upload and get your insights almost instantly.' },
-          ].map((f) => (
-            <div key={f.title} className={styles.featureCard}>
-              <span className={styles.featureCardIcon}>{f.icon}</span>
-              <h3 className={styles.featureCardTitle}>{f.title}</h3>
-              <p className={styles.featureCardDesc}>{f.desc}</p>
-            </div>
-          ))}
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>😊</span>
+            <p className={styles.featureCardTitle}>Emotions & Mood</p>
+            <p className={styles.featureCardDesc}>
+              Detect happiness, sadness, fear, and stress in dogs and cats
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🩺</span>
+            <p className={styles.featureCardTitle}>Skin Conditions</p>
+            <p className={styles.featureCardDesc}>
+              Identify rashes, infections, and abnormalities
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>👁️</span>
+            <p className={styles.featureCardTitle}>Eye Infections</p>
+            <p className={styles.featureCardDesc}>
+              Screen for conjunctivitis and other eye issues
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🐔</span>
+            <p className={styles.featureCardTitle}>Poultry Health</p>
+            <p className={styles.featureCardDesc}>
+              Detect fowlpox and analyze bird droppings
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🐄</span>
+            <p className={styles.featureCardTitle}>Livestock Behavior</p>
+            <p className={styles.featureCardDesc}>
+              Real-time calf monitoring with health alerts
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🐟</span>
+            <p className={styles.featureCardTitle}>Fish Freshness</p>
+            <p className={styles.featureCardDesc}>
+              Get instant quality grades and freshness scores
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🐴</span>
+            <p className={styles.featureCardTitle}>Horse Pain</p>
+            <p className={styles.featureCardDesc}>
+              Identify pain indicators through behavior analysis
+            </p>
+          </div>
+          <div className={styles.featureCard}>
+            <span className={styles.featureCardIcon}>🎵</span>
+            <p className={styles.featureCardTitle}>Bird Species</p>
+            <p className={styles.featureCardDesc}>
+              Identify bird species from audio recordings
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
+      {/* ── CTA ── */}
       <section className={styles.ctaSection}>
         <div className={styles.ctaInner}>
           <span className={styles.ctaEmoji}>🐾</span>

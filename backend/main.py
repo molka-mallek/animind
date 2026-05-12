@@ -35,6 +35,8 @@ predict_horse_pain = None
 _horse_pain_pipeline_error = None
 predict_thermal_cat = None
 _thermal_cat_pipeline_error = None
+predict_rabies = None
+_rabies_pipeline_error = None
 
 
 def _ensure_dog_pipeline_loaded():
@@ -290,6 +292,30 @@ def _ensure_xeno_pipeline_loaded():
         _xeno_pipeline_error = err
         return err
     predict_bird_species = func
+    return None
+
+
+def _ensure_rabies_pipeline_loaded():
+    global predict_rabies, _rabies_pipeline_error
+    if predict_rabies is not None:
+        return None
+    if _rabies_pipeline_error is not None:
+        return _rabies_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent
+        / "modules"
+        / "rabies_detection"
+        / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(
+        pipeline_path,
+        "rabies_detection_pipeline",
+        "predict_rabies",
+    )
+    if err:
+        _rabies_pipeline_error = err
+        return err
+    predict_rabies = func
     return None
 
 # ─────────────────────────────────────────────
@@ -746,6 +772,29 @@ async def predict_thermal_cat_api(file: UploadFile = File(...)):
         with open(temp_path, "wb") as f:
             f.write(contents)
         result = predict_thermal_cat(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# RABIES DETECTION
+# ─────────────────────────────────────────────
+@app.post("/predict-rabies")
+async def predict_rabies_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        err = _ensure_rabies_pipeline_loaded()
+        if err:
+            return {"error": f"Rabies model unavailable: {err}"}
+        contents  = await file.read()
+        temp_path = f"temp_{uuid.uuid4().hex}.jpg"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_rabies(temp_path)
         return result
     except Exception as e:
         return {"error": str(e)}

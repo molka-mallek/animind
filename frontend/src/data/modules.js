@@ -128,43 +128,6 @@ export const modules = [
     route: '/modules/thermal-cat',
   },
 
-  // ── COMING SOON ──────────────────────────────────────────────────────────
-  {
-    id: 'dog-vocalization',
-    title: 'Dog Vocalization Analysis',
-    description: 'Analyze dog barks, whines, and growls to understand what your dog is trying to communicate.',
-    icon: '🐶',
-    tag: 'Coming Soon',
-    category: 'pets',
-    route: null,
-  },
-  {
-    id: 'wound-detection',
-    title: 'Wound & Injury Detection',
-    description: 'Upload a photo to quickly identify wounds or injuries and decide if veterinary care is needed.',
-    icon: '🩹',
-    tag: 'Coming Soon',
-    category: 'pets',
-    route: null,
-  },
-  {
-    id: 'breed-id',
-    title: 'Breed Identification',
-    description: 'Not sure what breed your animal is? Get an instant identification with care tips.',
-    icon: '🏷️',
-    tag: 'Coming Soon',
-    category: 'pets',
-    route: null,
-  },
-  {
-    id: 'activity-tracker',
-    title: 'Activity & Wellness Tracker',
-    description: 'See how active your animal is over time and get alerts when something seems off.',
-    icon: '💓',
-    tag: 'Coming Soon',
-    category: 'livestock',
-    route: null,
-  },
 ]
 
 export const CATEGORIES = [
