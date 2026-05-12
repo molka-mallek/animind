@@ -25,6 +25,10 @@ predict_skin_anomaly = None
 _skin_anomaly_pipeline_error = None
 predict_ataxia = None
 _ataxia_pipeline_error = None
+predict_fish_freshness = None
+_fish_pipeline_error = None
+predict_bird_species = None
+_xeno_pipeline_error = None
 
 
 def _ensure_dog_pipeline_loaded():
@@ -182,6 +186,54 @@ def _ensure_ataxia_pipeline_loaded():
     except Exception as e:
         _ataxia_pipeline_error = str(e)
         return _ataxia_pipeline_error
+
+
+def _ensure_fish_pipeline_loaded():
+    global predict_fish_freshness, _fish_pipeline_error
+    if predict_fish_freshness is not None:
+        return None
+    if _fish_pipeline_error is not None:
+        return _fish_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent
+        / "modules"
+        / "fish_freshness"
+        / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(
+        pipeline_path,
+        "fish_freshness_pipeline",
+        "predict_fish_freshness",
+    )
+    if err:
+        _fish_pipeline_error = err
+        return err
+    predict_fish_freshness = func
+    return None
+
+
+def _ensure_xeno_pipeline_loaded():
+    global predict_bird_species, _xeno_pipeline_error
+    if predict_bird_species is not None:
+        return None
+    if _xeno_pipeline_error is not None:
+        return _xeno_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent
+        / "modules"
+        / "xeno"
+        / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(
+        pipeline_path,
+        "xeno_pipeline",
+        "predict_bird_species",
+    )
+    if err:
+        _xeno_pipeline_error = err
+        return err
+    predict_bird_species = func
+    return None
 
 # ─────────────────────────────────────────────
 # APP INIT
@@ -514,6 +566,57 @@ async def predict_ataxia_api(file: UploadFile = File(...)):
         return {"error": str(e)}
     except Exception as e:
         return {"error": f"Inference failed: {str(e)}"}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# FISH FRESHNESS PREDICTION
+# ─────────────────────────────────────────────
+@app.post("/predict-fish-freshness")
+async def predict_fish_freshness_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        fish_error = _ensure_fish_pipeline_loaded()
+        if fish_error:
+            return {"error": f"Fish freshness model unavailable: {fish_error}"}
+
+        contents = await file.read()
+        temp_path = f"temp_{uuid.uuid4().hex}.jpg"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_fish_freshness(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# BIRD SPECIES CLASSIFICATION (XENO)
+# ─────────────────────────────────────────────
+@app.post("/predict-bird-species")
+async def predict_bird_species_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        xeno_error = _ensure_xeno_pipeline_loaded()
+        if xeno_error:
+            return {"error": f"Bird species model unavailable: {xeno_error}"}
+
+        contents = await file.read()
+        ext       = Path(file.filename).suffix if file.filename else ".wav"
+        if not ext:
+            ext = ".wav"
+        temp_path = f"temp_{uuid.uuid4().hex}{ext}"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_bird_species(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
     finally:
         if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)

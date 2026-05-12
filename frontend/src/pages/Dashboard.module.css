@@ -72,7 +72,7 @@
 }
 
 /* ── Section ── */
-.section { display: flex; flex-direction: column; gap: 16px; }
+.section { display: flex; flex-direction: column; gap: 14px; }
 
 .sectionHeader {
   display: flex;
@@ -96,11 +96,46 @@
 }
 .viewAll:hover { opacity: 0.75; }
 
+/* ── Category filter pills ── */
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.filterPill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filterPill:hover {
+  border-color: var(--primary-mid);
+  color: var(--primary);
+  background: var(--primary-light);
+}
+.filterPillActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+.filterPillActive:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #fff;
+}
+
 /* ── Quick-access grid — single column stack ── */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 /* ── Module card ── */
@@ -157,3 +192,26 @@
 @media (max-width: 900px) {
   .statsGrid { grid-template-columns: repeat(2, 1fr); }
 }
+
+@media (max-width: 560px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .statCard { padding: 14px; gap: 10px; }
+  .statValue { font-size: 17px; }
+  .statIcon { font-size: 20px; }
+  .title { font-size: 22px; }
+  .card { padding: 14px; gap: 10px; }
+  .cardIcon { font-size: 22px; }
+  .cardDesc { display: none; }
+}
+
+/* ── Empty state ── */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.empty span { font-size: 28px; }

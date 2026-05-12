@@ -1,21 +1,58 @@
-# Frontend dependencies
+# ── Frontend ──────────────────────────────────────────────────────────────────
 frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
 
-# Python cache
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
 
-# Environment variables (passwords, API keys)
+# ── Virtual environment ───────────────────────────────────────────────────────
+backend/venv/
+venv/
+.venv/
+env/
+
+# ── Environment variables ─────────────────────────────────────────────────────
 .env
+.env.local
+.env.*.local
 
-# AI model files (too large for git)
-backend/model/*.keras
+# ── AI model files (too large for git — download from Drive link in README) ───
 *.keras
-backend/model/*.h5
 *.h5
-backend/model/*.pth
 *.pth
-backend/model/*.pkl
-*.pkl
-backend/model/*.pt
 *.pt
+*.pkl
+*.onnx
+*.tflite
+
+# ── Training notebooks & raw model folder (not needed for deployment) ─────────
+backend/yolo_models_notebooks/
+
+# ── Temp files created by inference ──────────────────────────────────────────
+backend/temp_*.jpg
+backend/temp_*.mp4
+backend/temp_*.wav
+backend/temp_*.png
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*

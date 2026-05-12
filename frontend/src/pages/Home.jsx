@@ -148,6 +148,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FOOTER ── */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+
+          {/* Brand column */}
+          <div className={styles.footerBrand}>
+            <img src="/cortexa.png" alt="Cortexa" className={styles.footerLogo} />
+            <p className={styles.footerTagline}>
+              AI-powered animal health insights for pet owners and farmers.
+            </p>
+            <div className={styles.footerBadge}>
+              <span>🎓</span>
+              <span>École Supérieure Privée d'Ingénierie et de Technologie — Esprit</span>
+            </div>
+          </div>
+
+          {/* Contact column */}
+          <div className={styles.footerCol}>
+            <p className={styles.footerColTitle}>Contact</p>
+            <ul className={styles.footerLinks}>
+              <li>
+                <a href="mailto:Cortexa@gmail.com" className={styles.footerLink}>
+                  <span className={styles.footerLinkIcon}>✉️</span>
+                  Cortexa@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+21612345678" className={styles.footerLink}>
+                  <span className={styles.footerLinkIcon}>📞</span>
+                  +216 12 345 678
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources column */}
+          <div className={styles.footerCol}>
+            <p className={styles.footerColTitle}>Resources</p>
+            <ul className={styles.footerLinks}>
+              <li>
+                <a
+                  href="https://ilefbennour10.wixsite.com/my-site-1/about-4"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.footerLink}
+                >
+                  <span className={styles.footerLinkIcon}>📝</span>
+                  Project Blog
+                </a>
+              </li>
+              <li>
+                <a href="/modules" className={styles.footerLink}>
+                  <span className={styles.footerLinkIcon}>🔬</span>
+                  Start Analysis
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div className={styles.footerBottom}>
+          <span>© {new Date().getFullYear()} Cortexa · Esprit · All rights reserved</span>
+        </div>
+      </footer>
+
     </div>
   )
 }

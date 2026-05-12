@@ -1,21 +1,21 @@
+// ── category values used for filtering ──────────────────────────────────────
+// 'pets'    → dogs, cats, eyes, skin
+// 'poultry' → chickens, bird droppings
+// 'livestock' → calves, fish
+// 'wildlife'  → bird species, rabies
+// 'neuro'     → behavioral / neurological
+
 export const modules = [
-  // ── AVAILABLE NOW ──
+
+  // ── AVAILABLE ────────────────────────────────────────────────────────────
   {
     id: 'dog-emotion',
     title: 'Dog Emotion Analysis',
     description: 'Upload a photo or video to detect your dog\'s emotional state — happy, sad, angry, relaxed, or fearful.',
     icon: '🐶',
     tag: 'Available',
+    category: 'pets',
     route: '/modules/dog-emotion',
-  },
-  {
-    id: 'calf-behavior',
-    title: 'Real-Time Calf Monitoring',
-    description: 'Live behavioral analysis from sensor data — detect if your calf is eating, resting, active, or showing unusual patterns.',
-    icon: '🐄',
-    tag: 'Available',
-    route: null,
-    external: 'http://localhost:8501',
   },
   {
     id: 'eye-infection',
@@ -23,15 +23,8 @@ export const modules = [
     description: 'Upload a clear eye photo to screen for possible eye infection signs in cats and dogs.',
     icon: '👁️',
     tag: 'Available',
+    category: 'pets',
     route: '/modules/eye-infection',
-  },
-  {
-    id: 'chicken-fowlpox',
-    title: 'Chicken Fowlpox Detection',
-    description: 'Upload a clear chicken photo to screen for possible fowlpox symptoms.',
-    icon: '🐔',
-    tag: 'Available',
-    route: '/modules/chicken-fowlpox',
   },
   {
     id: 'skin-disease',
@@ -39,15 +32,54 @@ export const modules = [
     description: 'Share a close-up photo and find out if your cat or dog has a skin anomaly — with affected area highlighted.',
     icon: '🔬',
     tag: 'Available',
+    category: 'pets',
     route: '/modules/skin-anomaly',
+  },
+  {
+    id: 'behavioral-disease',
+    title: 'Behavioral Disease Detection',
+    description: 'Detect potential behavioral disorders or neurological issues in dogs and cats via video analysis.',
+    icon: '🧠',
+    tag: 'Available',
+    category: 'neuro',
+    route: '/modules/behavioral-disease',
+  },
+  {
+    id: 'chicken-fowlpox',
+    title: 'Chicken Fowlpox Detection',
+    description: 'Upload a clear chicken photo to screen for possible fowlpox symptoms.',
+    icon: '🐔',
+    tag: 'Available',
+    category: 'poultry',
+    route: '/modules/chicken-fowlpox',
   },
   {
     id: 'bird-droppings',
     title: 'Bird Droppings Analysis',
-    description: 'Upload a droppings image to screen for signs of possible infection.',
+    description: 'Upload a droppings image to screen for signs of possible infection in poultry.',
     icon: '🧪',
     tag: 'Available',
+    category: 'poultry',
     route: '/modules/bird-droppings',
+  },
+  {
+    id: 'calf-behavior',
+    title: 'Real-Time Calf Monitoring',
+    description: 'Live behavioral analysis from sensor data — detect if your calf is eating, resting, active, or showing unusual patterns.',
+    icon: '🐄',
+    tag: 'Available',
+    category: 'livestock',
+    route: null,
+    external: 'http://localhost:8501',
+  },
+  {
+    id: 'fish-freshness',
+    title: 'Fish Freshness Analysis',
+    description: 'Upload a fish photo and get an instant freshness score (0–100) with a quality grade (C1/C2/C3) and actionable insights.',
+    icon: '🐟',
+    tag: 'Available',
+    category: 'livestock',
+    route: '/modules/fish-freshness',
   },
   {
     id: 'rabies',
@@ -55,32 +87,36 @@ export const modules = [
     description: 'Upload a clear animal photo to screen for rabies-related symptoms and get a confidence score.',
     icon: '🧬',
     tag: 'Available',
+    category: 'wildlife',
     route: '/rabies',
   },
-  
-  // ── COMING SOON ──
+  {
+    id: 'bird-species',
+    title: 'Bird Species Classification',
+    description: 'Upload a bird audio recording and our AI identifies the species from its song using mel-spectrogram analysis.',
+    icon: '🎵',
+    tag: 'Available',
+    category: 'wildlife',
+    route: '/modules/bird-species',
+  },
+
+  // ── COMING SOON ──────────────────────────────────────────────────────────
   {
     id: 'cat-behavior',
     title: 'Cat Behavior Classification',
     description: 'Analyze your cat\'s behavior patterns and emotional state from photos or videos.',
     icon: '🐱',
     tag: 'Coming Soon',
+    category: 'pets',
     route: null,
-  },
-  {
-    id: 'behavioral-disease',
-    title: 'Behavioral Disease Classification',
-    description: 'Detect potential behavioral disorders or neurological issues in dogs and cats.',
-    icon: '🧠',
-    tag: 'Available',
-    route: '/modules/behavioral-disease',
   },
   {
     id: 'dog-vocalization',
     title: 'Dog Vocalization Analysis',
-    description: 'Analyze dog barks, whines, and growls to understand what your dog is trying to communicate (audio analysis).',
+    description: 'Analyze dog barks, whines, and growls to understand what your dog is trying to communicate.',
     icon: '🔊',
     tag: 'Coming Soon',
+    category: 'pets',
     route: null,
   },
   {
@@ -89,38 +125,43 @@ export const modules = [
     description: 'Detect signs of pain or discomfort in horses through video analysis of movement and facial expressions.',
     icon: '🐴',
     tag: 'Coming Soon',
-    route: null,
-  },
-  {
-    id: 'livestock-behavior',
-    title: 'Monitor your livestock',
-    description: 'Track movement and activity patterns over time to catch problems before they escalate.',
-    icon: '🐄',
-    tag: 'Coming Soon',
+    category: 'livestock',
     route: null,
   },
   {
     id: 'wound-detection',
-    title: 'Check for injuries',
-    description: 'Upload a photo to quickly identify wounds or injuries and decide if care is needed.',
+    title: 'Wound & Injury Detection',
+    description: 'Upload a photo to quickly identify wounds or injuries and decide if veterinary care is needed.',
     icon: '🩹',
     tag: 'Coming Soon',
+    category: 'pets',
     route: null,
   },
   {
     id: 'breed-id',
-    title: 'Identify the breed',
+    title: 'Breed Identification',
     description: 'Not sure what breed your animal is? Get an instant identification with care tips.',
     icon: '🏷️',
     tag: 'Coming Soon',
+    category: 'pets',
     route: null,
   },
   {
     id: 'activity-tracker',
-    title: 'Track activity & wellness',
+    title: 'Activity & Wellness Tracker',
     description: 'See how active your animal is over time and get alerts when something seems off.',
     icon: '💓',
     tag: 'Coming Soon',
+    category: 'livestock',
     route: null,
   },
+]
+
+export const CATEGORIES = [
+  { id: 'all',      label: 'All' },
+  { id: 'pets',     label: '🐾 Pets' },
+  { id: 'poultry',  label: '🐔 Poultry' },
+  { id: 'livestock',label: '🐄 Livestock' },
+  { id: 'wildlife', label: '🦜 Wildlife' },
+  { id: 'neuro',    label: '🧠 Neurological' },
 ]

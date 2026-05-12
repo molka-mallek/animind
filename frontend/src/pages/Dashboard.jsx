@@ -1,19 +1,24 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { modules } from '../data/modules'
+import { modules, CATEGORIES } from '../data/modules'
 import styles from './Dashboard.module.css'
 
+const availableModules = modules.filter(m => m.route || m.external)
+
 const stats = [
-  { icon: '🔍', value: '8', label: 'Behavior checks available' },
-  { icon: '🐾', value: '4+', label: 'Animal types supported' },
+  { icon: '🔍', value: String(availableModules.length), label: 'Checks available' },
+  { icon: '🐾', value: '4+',   label: 'Animal types supported' },
   { icon: '⚡', value: 'Fast', label: 'Results in seconds' },
   { icon: '🚀', value: 'Beta', label: 'New checks coming soon' },
 ]
 
-// Quick-access: all available modules
-const quickModules = modules.filter(m => m.route || m.external)
-
 export default function Dashboard() {
   const navigate = useNavigate()
+  const [activeCategory, setActiveCategory] = useState('all')
+
+  const filtered = activeCategory === 'all'
+    ? availableModules
+    : availableModules.filter(m => m.category === activeCategory)
 
   return (
     <div className={styles.page}>
@@ -50,13 +55,27 @@ export default function Dashboard() {
             See all →
           </button>
         </div>
+
+        {/* Category filter */}
+        <div className={styles.filterRow}>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              className={`${styles.filterPill} ${activeCategory === cat.id ? styles.filterPillActive : ''}`}
+              onClick={() => setActiveCategory(cat.id)}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
         <div className={styles.grid}>
-          {quickModules.map((mod) => (
+          {filtered.map((mod) => (
             <div
               key={mod.id}
               className={styles.card}
               onClick={() => {
-                if (mod.route) navigate(mod.route)
+                if (mod.route)         navigate(mod.route)
                 else if (mod.external) window.open(mod.external, '_blank')
               }}
             >
@@ -71,6 +90,13 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+
+        {filtered.length === 0 && (
+          <div className={styles.empty}>
+            <span>🔍</span>
+            <p>No checks in this category yet.</p>
+          </div>
+        )}
       </div>
 
     </div>

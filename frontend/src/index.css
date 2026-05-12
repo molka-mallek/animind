@@ -49,3 +49,10 @@ img { max-width: 100%; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* ── Global responsive overrides ── */
+
+/* Prevent horizontal overflow — only on body, not html (preserves fixed positioning) */
+body {
+  overflow-x: hidden;
+}

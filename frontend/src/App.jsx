@@ -11,6 +11,8 @@ import BirdDroppings from './modules/BirdDroppings'
 import SkinAnomaly from './modules/SkinAnomaly'
 import BehavioralDisease from './modules/BehavioralDisease'
 import RabiesDetection from './modules/RabiesDetection'
+import FishFreshness from './modules/FishFreshness'
+import BirdSpecies from './modules/BirdSpecies'
 
 export default function App() {
   return (
@@ -26,6 +28,8 @@ export default function App() {
           <Route path="modules/bird-droppings" element={<BirdDroppings />} />
           <Route path="modules/skin-anomaly" element={<SkinAnomaly />} />
           <Route path="modules/behavioral-disease" element={<BehavioralDisease />} />
+          <Route path="modules/fish-freshness" element={<FishFreshness />} />
+          <Route path="modules/bird-species" element={<BirdSpecies />} />
           <Route path="rabies" element={<RabiesDetection />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

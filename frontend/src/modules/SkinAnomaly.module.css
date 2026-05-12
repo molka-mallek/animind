@@ -487,3 +487,15 @@
   .layout { grid-template-columns: 1fr; }
   .steps  { gap: 6px; }
 }
+
+@media (max-width: 480px) {
+  .header { flex-wrap: wrap; gap: 10px; }
+  .headerIcon { width: 44px; height: 44px; font-size: 24px; }
+  .title { font-size: 18px; }
+  .subtitle { font-size: 12px; }
+  .panel { padding: 16px; }
+  .dropzone { min-height: 160px; }
+  .verdictLabel { font-size: 15px; }
+  .verdictEmoji { font-size: 26px; }
+  .steps { display: none; }
+}

@@ -1,568 +1,272 @@
-# AniMind — AI-Powered Animal Behavior Analysis Platform
+# AniMind — AI-Powered Animal Health & Behavior Platform
 
-> Deep learning-based animal behavior recognition and health monitoring system for pets and livestock
+> Deep learning platform for animal behavior recognition, disease detection, and health monitoring across pets, poultry, livestock, and wildlife.
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://reactjs.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.14+-orange.svg)](https://www.tensorflow.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688.svg)](https://fastapi.tiangolo.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.57+-ff4b4b.svg)](https://streamlit.io/)
 
 ---
 
 ## Overview
 
-**AniMind** is an artificial intelligence platform that analyzes animal behavior and health through computer vision, deep learning and more. The system provides real time insights for pet owners, veterinarians, and farmers to better understand and monitor animal welfare.
+**AniMind** is a full-stack AI platform that analyses animal behavior and health through computer vision, audio processing, and deep learning. It provides real-time insights for pet owners, veterinarians, and farmers.
 
-The platform combines multiple AI models for emotion detection, behavior classification, disease detection, and anomaly recognition across various animal species including dogs, cats, horses, birds, and livestock.
-
-**Key Capabilities:**
-- Real-time emotion and behavior analysis from images and videos
-- Live IoT sensor monitoring for livestock behavior tracking
-- Multi-species support (dogs, cats, horses, birds, cattle, poultry)
-- Health anomaly detection and early warning systems
-- Scalable REST API architecture for integration
-
-**Use Cases:**
-- Pet owners monitoring emotional well-being
-- Veterinary diagnostics and health screening
-- Farm management and livestock monitoring
-- Animal welfare research and behavioral studies
+**Institution:** École Supérieure Privée d'Ingénierie et de Technologie — Esprit  
+**Contact:** Cortexa@gmail.com | +216 12 345 678  
+**Blog:** https://ilefbennour10.wixsite.com/my-site-1/about-4
 
 ---
 
-## Features
+## Available Features
 
-### Current Features (Available)
-- ✅ **Dog Emotion Recognition** — Classify dog emotions from photos/videos (happy, sad, angry, relaxed, fearful)
-- ✅ **Real-Time Calf Behavior Monitoring** — Live accelerometer-based behavior classification (lying, standing, eating, active, social, abnormal)
-- ✅ **Eye Infection Detection** — Screen for eye infections in cats and dogs using ResNet18-based classification
-- ✅ **Chicken Fowlpox Detection** — Identify fowlpox disease in poultry using EfficientNet-B0 architecture
-- ✅ **Bird Droppings Analysis** — Assess bird health through fecal matter analysis using ResNet18
-- ✅ **Skin Anomaly Detection** — Detect and segment skin diseases in cats and dogs using U-Net with medical-grade visualization
-- ✅ **Multi-Modal Analysis** — Support for image, video, and sensor data inputs
-- ✅ **Interactive Dashboard** — Streamlit-based real-time monitoring interface
-- ✅ **REST API** — FastAPI backend for scalable deployment
-- ✅ **Responsive Web Interface** — React-based frontend for easy access
-
-### Upcoming Features (In Development)
-- 🔜 **Cat Behavior Classification** — Emotion and activity recognition for cats
-- 🔜 **Behavioral Disease Detection** — Identify neurological and behavioral disorders
-- 🔜 **Dog Vocalization Analysis** — Audio-based emotion detection from barks and whines
-- 🔜 **Horse Pain Detection** — Video analysis for pain and discomfort indicators
-- 🔜 **Multi-language Support** — Interface localization
+| Module | Input | Model |
+|---|---|---|
+| 🐶 Dog Emotion Analysis | Photo / Video | CNN + YOLOv8 |
+| 👁️ Eye Infection Detection | Photo | ResNet18 |
+| 🔬 Skin Anomaly Detection | Photo | EfficientNet + U-Net |
+| 🧠 Behavioral Disease Detection | Video | ST-GCN + YOLO-Pose |
+| 🐔 Chicken Fowlpox Detection | Photo | EfficientNet-B0 |
+| 🧪 Bird Droppings Analysis | Photo | ResNet18 |
+| 🐄 Real-Time Calf Monitoring | Sensor (accelerometer) | GRU |
+| 🐟 Fish Freshness Analysis | Photo | YOLO + SAM2 + DualStream EfficientNet-B0 |
+| 🎵 Bird Species Classification | Audio (.wav / .mp3) | Custom BirdCNN (mel-spectrogram) |
+| 🧬 Rabies Detection | Photo | CNN |
 
 ---
 
-## Tech Stack
-
-### Frontend
-- **React 19** — Modern UI framework with hooks and context
-- **Vite** — Fast build tool and development server
-- **React Router** — Client-side routing and navigation
-- **CSS Modules** — Scoped styling and component isolation
-
-### Backend
-- **FastAPI** — High-performance Python web framework
-- **Uvicorn** — ASGI server for async request handling
-- **Pydantic** — Data validation and serialization
-- **Python 3.9+** — Core programming language
-
-### AI / Machine Learning
-- **TensorFlow / Keras** — Deep learning model training and inference
-- **OpenCV** — Computer vision and image processing
-- **Ultralytics YOLOv8** — Object detection and face localization
-- **scikit-learn** — Feature engineering and preprocessing
-- **NumPy** — Numerical computing and array operations
-- **Pandas** — Data manipulation and analysis
-
-### Dashboard & Visualization
-- **Streamlit** — Interactive real-time monitoring dashboard
-- **Matplotlib** — Data visualization and plotting
-- **Plotly** — Interactive charts and graphs
-
-### Model Architectures
-- **CNN (Convolutional Neural Networks)** — Image-based emotion recognition
-- **ResNet18** — Eye infection and bird droppings classification
-- **EfficientNet-B0** — Chicken fowlpox detection
-- **U-Net with Attention Gates** — Skin anomaly segmentation
-- **VGG16 / ResNet50** — Animal classification and anomaly detection
-- **GRU (Gated Recurrent Units)** — Time-series behavior classification
-- **Transfer Learning** — Pre-trained models for feature extraction
-- **Ensemble Methods** — Multi-model prediction aggregation
-
-### Data Processing
-- **Feature Engineering** — ODBA, VeDBA, pitch, roll calculations
-- **StandardScaler** — Data normalization and standardization
-- **LabelEncoder** — Categorical variable encoding
-- **Data Augmentation** — Image transformations for model robustness
-
-### Deployment & DevOps
-- **Docker** (planned) — Containerization for consistent deployment
-- **REST API** — Stateless architecture for scalability
-- **CORS Middleware** — Cross-origin resource sharing
-- **Multi-process Architecture** — Separate frontend, backend, and dashboard services
-
----
-
-## Directory Structure
+## Architecture
 
 ```
 animind/
-│
-├── frontend/                          # React web application
+├── frontend/                    # React 19 + Vite web app
 │   ├── src/
-│   │   ├── components/                # Reusable UI components
-│   │   │   ├── Layout.jsx             # Main layout wrapper
-│   │   │   ├── Navbar.jsx             # Navigation bar
-│   │   │   └── Sidebar.jsx            # Side navigation
-│   │   ├── pages/                     # Route pages
-│   │   │   ├── Home.jsx               # Landing page
-│   │   │   ├── Modules.jsx            # Feature selection
-│   │   │   └── Dashboard.jsx          # Analytics dashboard
-│   │   ├── modules/                   # Feature modules
-│   │   │   ├── DogEmotion.jsx         # Dog emotion analysis UI
-│   │   │   ├── EyeInfection.jsx       # Eye infection detection UI
-│   │   │   ├── ChickenFowlpox.jsx     # Fowlpox detection UI
-│   │   │   ├── BirdDroppings.jsx      # Bird droppings analysis UI
-│   │   │   └── SkinAnomaly.jsx        # Skin anomaly detection UI
-│   │   ├── data/
-│   │   │   └── modules.js             # Module configuration
-│   │   ├── App.jsx                    # Root component
-│   │   └── main.jsx                   # Entry point
-│   ├── public/                        # Static assets
-│   ├── package.json                   # Node dependencies
-│   └── vite.config.js                 # Build configuration
+│   │   ├── components/          # Layout, Navbar, Sidebar
+│   │   ├── pages/               # Home, Dashboard, Modules
+│   │   ├── modules/             # One JSX file per AI feature
+│   │   └── data/modules.js      # Central module registry
+│   └── public/                  # Static assets (bird images, logo)
 │
-├── backend/                           # Python FastAPI server
-│   ├── modules/                       # AI pipeline modules
-│   │   ├── dog_emotion/
-│   │   │   └── ai_pipeline.py         # Dog emotion inference
-│   │   ├── calf_behavior/
-│   │   │   └── ai_pipeline.py         # Calf behavior inference
-│   │   ├── cat and dogs eye infection/
-│   │   │   ├── ai_pipeline.py         # Eye infection detection
-│   │   │   └── cat_eye_infection_resnet18_best.pth
-│   │   └── chiken/
-│   │       ├── fowlpox_ai_pipeline.py # Fowlpox detection
-│   │       ├── fowlpox_efficientnet_b0_best.pth
-│   │       ├── bird_droppings_ai_pipeline.py
-│   │       └── bird_droppings_resnet18_best.pth
-│   │   └── skin_anomaly/
-│   │       └── ai_pipeline.py         # Skin anomaly detection & segmentation
-│   ├── model/                         # Trained models
-│   │   ├── dog_emotion_best_model.keras
-│   │   ├── best_classifier.h5         # Animal classifier (cat/dog)
-│   │   ├── best_anomaly_detector.h5   # Anomaly detector
-│   │   ├── unet_segmentation.h5       # U-Net segmentation model
-│   │   ├── skin_anomaly_metadata.json # Model configuration
-│   │   └── calf_behavior/
-│   │       ├── model.keras            # GRU model
-│   │       ├── scaler.pkl             # Feature scaler
-│   │       ├── label_encoder.pkl      # Class encoder
-│   │       └── model_metadata.json    # Model config
-│   ├── main.py                        # FastAPI application
-│   ├── calf_dashboard.py              # Streamlit dashboard
-│   ├── requirements.txt               # Python dependencies
-│
-├── .gitignore                         # Git ignore rules
-└── README.md                          # This file
+└── backend/                     # FastAPI + Python
+    ├── main.py                  # API routes (lazy-loaded pipelines)
+    ├── calf_dashboard.py        # Streamlit real-time dashboard
+    ├── modules/                 # AI inference pipelines
+    │   ├── dog_emotion/
+    │   ├── calf_behavior/
+    │   ├── cat and dogs eye infection/
+    │   ├── chiken/
+    │   ├── skin_anomaly/
+    │   ├── ataxia/
+    │   ├── fish_freshness/      # YOLO + SAM2 + DualStream EfficientNet
+    │   └── xeno/                # BirdCNN mel-spectrogram classifier
+    └── model/                   # Model weights (download separately)
+        ├── calf_behavior/       # GRU weights + scaler + encoder
+        ├── fish_freshness/      # fish_model.pth + yolo26n.pt + sam2.1_hiera_large.pt
+        └── xeno/                # bird_model.pth
 ```
 
 ---
 
-## ⚠️ Before You Start — Download the Models
+## ⚠️ Model Files — Download Required
 
-The AI model files are not included in this repo (too large for git).
+Model weights are **not included in this repository** (too large for git).
 
-### **Required Model Files:**
+### Download all models from Google Drive:
 
-1. **Dog Emotion Model:**
-   - Download `dog_emotion_best_model.keras` from: [Google Drive Link](https://drive.google.com/file/d/15Zh-ydHIT5wkYkUiWmHzCXhz1pB4JXmy/view?usp=sharing)
-   - Place it here: `backend/model/dog_emotion_best_model.keras`
+**🔗 [Download Models — Google Drive](https://drive.google.com/drive/folders/19xoYa18GhGoznFl4gE2HlXB5jVkROgfn?usp=sharing)**
 
-2. **Skin Anomaly Detection Models:**
-   - Download the skin anomaly models from: [Google Drive Link](https://drive.google.com/drive/folders/1Qa04B8OLaRj0VUHr9s5p7CVlVjYL_lEF?usp=sharing)
-   - Extract and place in `backend/model/`:
-     ```
-     backend/model/
-     ├── best_classifier.h5          # Animal classifier (cat/dog)
-     ├── best_anomaly_detector.h5    # Anomaly detector
-     ├── unet_segmentation.h5        # U-Net segmentation
-     └── skin_anomaly_metadata.json  # Already included in repo
-     ```
+The Drive folder contains:
+- `fish_model.pth` — DualStream EfficientNet-B0 fish freshness classifier
+- `bird_model.pth` — BirdCNN mel-spectrogram species classifier
+- `yolo26n.pt` — Custom YOLO for fish eye/gill ROI detection
+- `sam2.1_hiera_large.pt` — SAM 2.1 segmentation model *(large file, ~2.4 GB)*
+- Other model files referenced in the README
 
-3. **Other Models:**
-   - Eye infection, fowlpox, and bird droppings models are already included in the repository
+### Where to place them:
 
-### **Quick Setup:**
-```bash
-# Option 1: Manual download (recommended)
-# Download from the links above and place in backend/model/
-
-# Option 2: Use download script (after adding Google Drive links)
-cd backend
-pip install gdown
-python download_models.py
 ```
+backend/model/
+├── fish_freshness/
+│   ├── fish_model.pth              ← from Drive
+│   ├── yolo26n.pt                  ← from Drive
+│   └── sam2.1_hiera_large.pt       ← from Drive (optional, ~2.4 GB)
+├── xeno/
+│   └── bird_model.pth              ← from Drive
+├── calf_behavior/
+│   ├── model.keras                 ← from Drive
+│   ├── scaler.pkl                  ← from Drive
+│   └── label_encoder.pkl           ← from Drive
+└── (other models from Drive)
+```
+
+> **Note:** `sam2.1_hiera_large.pt` is optional. Without it, the fish freshness pipeline falls back to plain YOLO bounding-box crops instead of SAM-segmented crops. The endpoint still works — accuracy may be slightly lower.
 
 ---
 
-## 🚀 Running the Backend
+## Setup
 
-Make sure you have **Python 3.9+** installed.
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- Git
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/animind.git
+cd animind
+```
+
+### 2. Backend setup
 
 ```bash
 cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate it
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Install SAM2 (required for fish freshness full pipeline)
+pip install "git+https://github.com/facebookresearch/sam2.git"
 ```
 
-**Required Python packages:**
-- `fastapi>=0.104.0` — Web framework
-- `uvicorn>=0.24.0` — ASGI server
-- `tensorflow>=2.14.0` — Deep learning
-- `opencv-python>=4.8.0` — Computer vision
-- `streamlit>=1.32.0` — Dashboard
-- `scikit-learn>=1.3.0` — ML utilities
-- `numpy>=1.24.0` — Numerical computing
-- `pandas>=2.0.0` — Data manipulation
+### 3. Download model files
 
-#### 3. Frontend Setup
+Download from the [Google Drive link](https://drive.google.com/drive/folders/19xoYa18GhGoznFl4gE2HlXB5jVkROgfn?usp=sharing) and place them in `backend/model/` as shown above.
+
+### 4. Frontend setup
+
 ```bash
 cd frontend
 npm install
 ```
 
-**Required Node packages:**
-- `react@19` — UI framework
-- `react-router-dom` — Routing
-- `vite` — Build tool
+---
 
-#### 4. Model Files Setup
+## Running the Application
 
-⚠️ **Important:** Model files are not included in the repository due to size constraints.
+You need **3 terminals** for the full experience:
 
-**Download the trained models:**
-
-1. **Skin Anomaly Detection Models** (Required for skin anomaly module):
-   - Download from: [Google Drive Link](https://drive.google.com/drive/folders/1Qa04B8OLaRj0VUHr9s5p7CVlVjYL_lEF?usp=sharing)
-   - Extract and place in `backend/model/`:
-     ```
-     backend/model/
-     ├── best_classifier.h5          # Animal classifier (cat/dog)
-     ├── best_anomaly_detector.h5    # Anomaly detector
-     ├── unet_segmentation.h5        # U-Net segmentation
-     └── skin_anomaly_metadata.json  # Model configuration
-     ```
-
-2. **Other Models**:
-   - Dog Emotion: [Download link](https://drive.google.com/file/d/15Zh-ydHIT5wkYkUiWmHzCXhz1pB4JXmy/view?usp=sharing)
-   - Place in `backend/model/dog_emotion_best_model.keras`
-
-**Alternative - Download Script:**
-```bash
-# Run the download script (if provided)
-cd backend
-python download_models.py
-```
-
-### Running the Application
-
-#### Option 1: Run All Services (3 Terminals)
-
-**Terminal 1 — Backend API:**
+**Terminal 1 — Backend API (port 8000):**
 ```bash
 cd backend
-uvicorn main:app --reload --port 8000
-```
-Access at: `http://localhost:8000`
-
-**Terminal 2 — Frontend Web App:**
-```bash
-cd frontend
-npm run dev
-```
-Access at: `http://localhost:5173`
-
-**Terminal 3 — Calf Monitoring Dashboard:**
-```bash
-cd backend
-streamlit run calf_dashboard.py
-```
-Access at: `http://localhost:8501`
-
-#### Option 2: Run Individual Services
-
-**Backend Only:**
-```bash
-cd backend
-uvicorn main:app --reload
+venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-**Frontend Only:**
+**Terminal 2 — Frontend (port 5173):**
 ```bash
 cd frontend
 npm run dev
 ```
 
-**Dashboard Only:**
+**Terminal 3 — Calf Monitoring Dashboard (port 8501):**
 ```bash
 cd backend
-streamlit run calf_dashboard.py
+venv\Scripts\streamlit.exe run calf_dashboard.py --server.port 8501
 ```
 
-### Usage
-
-#### Dog Emotion Analysis
-1. Navigate to `http://localhost:5173`
-2. Click "Start Analysis"
-3. Select "Dog Emotion Analysis"
-4. Upload a photo or video of your dog
-5. View emotion classification results (happy, sad, angry, relaxed, fearful)
-
-#### Calf Behavior Monitoring
-1. Navigate to `http://localhost:8501`
-2. Select a calf from the dropdown (calf_1 through calf_6)
-3. Toggle "Demo mode" to simulate sensor data
-4. Monitor real-time behavior classification
-5. Respond to alerts (abnormal behavior, lying streak, etc.)
-
-#### Eye Infection Detection
-1. Navigate to `http://localhost:5173`
-2. Click "Start Analysis"
-3. Select "Eye Infection Detection"
-4. Upload a clear eye photo of your cat or dog
-5. View infection screening results
-
-#### Chicken Fowlpox / Bird Droppings Analysis
-1. Navigate to `http://localhost:5173`
-2. Click "Start Analysis"
-3. Select the appropriate module
-4. Upload a clear photo
-5. View health assessment results
-
-#### Skin Anomaly Detection
-1. Navigate to `http://localhost:5173`
-2. Click "Start Analysis"
-3. Select "Skin Anomaly Detection"
-4. Upload a close-up photo of your cat or dog's skin
-5. View the 3-step analysis:
-   - **Step 1:** Animal identification (cat/dog)
-   - **Step 2:** Anomaly detection (healthy/anomaly)
-   - **Step 3:** Affected area segmentation with medical-grade visualization
-6. Review visual indicators and veterinary recommendations
-
-#### API Usage
-```python
-import requests
-
-# Dog emotion analysis
-with open('dog_photo.jpg', 'rb') as f:
-    response = requests.post(
-        'http://localhost:8000/predict',
-        files={'file': f}
-    )
-    result = response.json()
-    print(f"Emotion: {result['emotion']}")
-    print(f"Confidence: {result['confidence']}")
-
-# Calf behavior prediction
-response = requests.post(
-    'http://localhost:8000/predict-calf',
-    json={
-        'id': 'calf_1',
-        'accX': 0.95,
-        'accY': -0.10,
-        'accZ': 0.05
-    }
-)
-result = response.json()
-print(f"Behavior: {result['result']['behavior']}")
-
-# Skin anomaly detection
-with open('cat_skin.jpg', 'rb') as f:
-    response = requests.post(
-        'http://localhost:8000/predict-skin-anomaly',
-        files={'file': f}
-    )
-    result = response.json()
-    print(f"Animal: {result['animal_label']}")
-    print(f"Status: {result['status_label']}")
-    print(f"Confidence: {result['verdict_confidence']}%")
-    if result['segmentation_done']:
-        print(f"Affected area: {result['seg_area_pct']}%")
-```
-```
+Then open **http://localhost:5173** in your browser.
 
 ---
 
-## 🧩 Available Features
+## API Endpoints
 
-| Feature | Status |
-|---|---|
-| Dog Emotion Analysis (photo + video) | ✅ Ready |
-| Calf Behavior Monitoring (real-time) | ✅ Ready |
-| Eye Infection Detection (cats/dogs) | ✅ Ready |
-| Chicken Fowlpox Detection | ✅ Ready |
-| Skin Anomaly Detection & Segmentation | ✅ Ready |
-| Cat Behavior Classification | 🔜 Coming soon |
-| Rabies Detection | 🔜 Coming soon |
-| Livestock Behavior Monitoring | 🔜 Coming soon |
-| Wound Detection | 🔜 Coming soon |
-| Breed Identification | 🔜 Coming soon |
-| Activity & Vitals Tracker | 🔜 Coming soon |
-| Bird Droppings Analysis | 🔜 Coming soon |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Health check |
+| POST | `/predict` | Dog emotion (image) |
+| POST | `/predict-video` | Dog emotion (video) |
+| POST | `/predict-calf` | Calf behavior (sensor JSON) |
+| POST | `/predict-eye-infection` | Eye infection (image) |
+| POST | `/predict-chicken-fowlpox` | Fowlpox (image) |
+| POST | `/predict-bird-droppings` | Bird droppings (image) |
+| POST | `/predict-skin-anomaly` | Skin anomaly (image) |
+| POST | `/predict-ataxia` | Behavioral disease (video) |
+| POST | `/predict-fish-freshness` | Fish freshness (image) |
+| POST | `/predict-bird-species` | Bird species (audio) |
+
+Interactive docs: **http://localhost:8000/docs**
 
 ---
 
-## 🛠️ Tech Stack
+## Fish Freshness Pipeline
 
-- **Frontend:** React 19, Vite, React Router
-- **Backend:** FastAPI, TensorFlow, OpenCV, Ultralytics YOLOv8
-- **Model:** Custom-trained Keras model (5 emotion classes)
+The fish freshness module runs a 3-step pipeline:
+
+1. **YOLO** (`yolo26n.pt`) — detects eye and gill bounding boxes on the fish image
+2. **SAM 2.1** (`sam2.1_hiera_large.pt`) — segments and crops each ROI cleanly
+3. **DualStream EfficientNet-B0** (`fish_model.pth`) — takes both crops, outputs C1/C2/C3 grade + score 0–100
+
+The `roi_status` field in the response tells you which path was used:
+- `yolo+sam` — full pipeline
+- `yolo_bbox` — YOLO found ROIs but SAM not installed
+- `centre_crop_fallback` — no fish ROIs detected
+
+## Bird Species Pipeline
+
+The bird species module:
+
+1. Loads the audio file with `librosa` (resampled to 22050 Hz)
+2. Computes a mel-spectrogram (128 mels, normalised with global mean/std from training)
+3. Feeds the single-channel spectrogram into a custom **BirdCNN** (4 conv blocks + AdaptiveAvgPool + FC)
+4. Returns the predicted species with confidence and probabilities for all 5 classes
+
+**Supported species:** Common Cuckoo · Eurasian Blackcap · Great Tit · Grey-breasted Wood Wren · House Wren
 
 ---
 
 ## Troubleshooting
 
-### Common Issues
-
 **Backend not starting:**
 ```bash
-# Check if port 8000 is available
-netstat -an | grep 8000
-
-# Install missing dependencies
 pip install -r requirements.txt
 ```
 
-**Frontend not loading:**
+**`No module named 'sam2'`:**
 ```bash
-# Clear npm cache
-npm cache clean --force
-
-# Reinstall dependencies
-rm -rf node_modules package-lock.json
-npm install
+pip install "git+https://github.com/facebookresearch/sam2.git"
 ```
 
-**Model not found error:**
+**`No module named 'timm'`:**
+```bash
+pip install timm
 ```
-FileNotFoundError: model.keras not found
-```
-→ Download model files and place in `backend/model/` directory
 
-**CORS error:**
+**`No module named 'librosa'`:**
+```bash
+pip install librosa soundfile
 ```
-Access to fetch blocked by CORS policy
-```
-→ Ensure backend is running before starting frontend
 
-**Dashboard not connecting:**
-```
-Backend offline — please contact support
-```
-→ Start backend first: `uvicorn main:app --port 8000`
+**Fish/bird model not found:**
+→ Download from the [Google Drive link](https://drive.google.com/drive/folders/19xoYa18GhGoznFl4gE2HlXB5jVkROgfn?usp=sharing) and place in `backend/model/`
+
+**CORS error in browser:**
+→ Make sure the backend is running on port 8000 before opening the frontend
+
+**Calf dashboard shows "System offline":**
+→ Start the FastAPI backend first, then run Streamlit
 
 ---
 
-## Roadmap
+## Tech Stack
 
-### Phase 1 (Current)
-- ✅ Dog emotion recognition
-- ✅ Calf behavior monitoring
-- ✅ Eye infection detection (cats/dogs)
-- ✅ Chicken fowlpox detection
-- ✅ Bird droppings analysis
-- ✅ Skin anomaly detection & segmentation
-- ✅ REST API
-- ✅ Web interface
-- ✅ Real-time dashboard
-
-### Phase 2 (Q2 2026)
-- 🔜 Cat behavior classification
-- 🔜 Horse pain detection
-- 🔜 Dog vocalization analysis
-- 🔜 Multi-language support
-
-### Phase 3 (Q3 2026)
-- 🔜 Wound detection and severity assessment
-- 🔜 Breed identification system
-- 🔜 Activity and vitals tracking
-- 🔜 Advanced analytics dashboard
-
-### Phase 4 (Q4 2026)
-- 🔜 Mobile application (iOS/Android)
-- 🔜 Cloud deployment
-- 🔜 User authentication
-- 🔜 Historical data analytics
-- 🔜 Multi-farm management
-
----
-
-## Contributing
-
-Contributions are welcome! Please follow these guidelines:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-**Areas for contribution:**
-- New animal species support
-- Additional behavior classes
-- Model optimization
-- UI/UX improvements
-- Documentation
-- Testing
+- **Frontend:** React 19, Vite, React Router, CSS Modules
+- **Backend:** FastAPI, Uvicorn, Pydantic
+- **AI/ML:** PyTorch, TensorFlow/Keras, timm, Ultralytics YOLOv8, SAM2, librosa, OpenCV, scikit-learn
+- **Dashboard:** Streamlit, Matplotlib
+- **Models:** EfficientNet-B0, ResNet18, U-Net, GRU, BirdCNN, DualStream EfficientNet, ST-GCN
 
 ---
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
-
-## Acknowledgments
-
-This project was developed as part of the **Artificial Intelligence and Machine Learning** curriculum at **Esprit School of Engineering**.
-
-**Special Thanks:**
-- **AcTBeCalf Dataset** — Calf behavior training data
-- **TensorFlow Team** — Deep learning framework
-- **FastAPI Community** — Web framework
-- **Streamlit Team** — Dashboard framework
-- **Open Source Community** — Libraries and tools
-
-**Academic Supervision:**
-- Esprit School of Engineering
-- AI & ML Department
-
----
-
-## Contact
-
-**Project Team:** AniMind Development Team  
-**Institution:** Esprit School of Engineering  
-**Email:** [animind@gmail.com]  
-**GitHub:** [https://github.com/your-username/animind](https://github.com/your-username/animind)
-
----
-
-## Citation
-
-If you use this project in your research, please cite:
-
-```bibtex
-@software{animind2026,
-  title={AniMind: AI-Powered Animal Behavior Analysis Platform},
-  author={Your Name},
-  year={2026},
-  institution={Esprit School of Engineering},
-  url={https://github.com/your-username/animind}
-}
-```
-
-
+MIT License — see [LICENSE](LICENSE) for details.
