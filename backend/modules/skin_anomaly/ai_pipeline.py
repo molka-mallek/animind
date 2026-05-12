@@ -162,54 +162,159 @@ def _preprocess(image_path: str) -> np.ndarray:
 
 
 # ── Segmentation mask → base64 PNG ────────────────────────────────────────
-def _mask_to_base64(mask_2d: np.ndarray, original_arr: np.ndarray, visualization_type: str = "medical") -> str:
+def _mask_to_base64(mask_2d: np.ndarray, original_arr: np.ndarray, visualization_type: str = "medical") -> tuple:
     """
     Overlay the segmentation mask on the original image and return
-    the result as a base64-encoded PNG string.
+    the result as a base64-encoded PNG string + the filtered mask for area calculation.
     
     Args:
         mask_2d: 2D segmentation mask
         original_arr: Original image array
         visualization_type: "medical" (recommended), "heatmap", "contour", "bbox", or "circle"
+        
+    Returns:
+        tuple: (base64_image_string, filtered_mask_2d)
     """
     # Resize mask to IMG_SIZE just in case
     mask_resized = cv2.resize(mask_2d, IMG_SIZE)
     img_uint8 = np.uint8(original_arr * 255)
     
+    # Variable pour stocker le masque filtré final
+    final_filtered_mask = None
+    
     if visualization_type == "medical":
-        # Medical-grade visualization (MOST USED IN VETERINARY/MEDICAL IMAGING)
+        # ═══════════════════════════════════════════════════════════════════════
+        # SOLUTION RADICALE: Détection multi-méthodes pour segmentation précise
+        # ═══════════════════════════════════════════════════════════════════════
         overlay = img_uint8.copy()
         
-        # Create binary mask with optimal threshold
-        binary_mask = (mask_resized > 0.65).astype(np.uint8)
+        # ── MÉTHODE 1: Détection basée sur la couleur (HSV) ──
+        hsv = cv2.cvtColor(img_uint8, cv2.COLOR_RGB2HSV)
         
-        # Apply morphological operations to clean the mask
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
-        binary_mask = cv2.morphologyEx(binary_mask, cv2.MORPH_CLOSE, kernel)
-        binary_mask = cv2.morphologyEx(binary_mask, cv2.MORPH_OPEN, kernel)
+        # Plages OPTIMISÉES pour capturer toutes les lésions roses/rouges
+        # Rouge vif (inflammations)
+        lower_red1 = np.array([0, 50, 60])
+        upper_red1 = np.array([12, 255, 255])
+        lower_red2 = np.array([168, 50, 60])
+        upper_red2 = np.array([180, 255, 255])
         
-        # Find contours
-        contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # Rose/Orange (lésions) - Plage élargie pour capturer toutes les nuances
+        lower_pink = np.array([0, 30, 80])
+        upper_pink = np.array([20, 220, 255])
         
-        # Create colored overlay for affected regions
-        mask_overlay = np.zeros_like(overlay)
+        # Créer les masques (SANS le masque brun pour éviter le pelage)
+        mask_red1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        mask_red2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        mask_pink = cv2.inRange(hsv, lower_pink, upper_pink)
         
-        min_area = 100  # Minimum area to consider
+        # Combiner uniquement rouge et rose (pas de brun)
+        color_mask = cv2.bitwise_or(mask_red1, mask_red2)
+        color_mask = cv2.bitwise_or(color_mask, mask_pink)
+        
+        # ── MÉTHODE 2: Détection de texture (variance locale) ──
+        gray = cv2.cvtColor(img_uint8, cv2.COLOR_RGB2GRAY)
+        total_area = IMG_SIZE[0] * IMG_SIZE[1]  # Définir total_area ici
+        
+        # Calculer la variance locale (zones anormales ont souvent texture différente)
+        kernel_size = 7
+        mean = cv2.blur(gray, (kernel_size, kernel_size))
+        mean_sq = cv2.blur(gray**2, (kernel_size, kernel_size))
+        variance = mean_sq - mean**2
+        
+        # Normaliser et seuiller
+        variance_norm = cv2.normalize(variance, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+        _, texture_mask = cv2.threshold(variance_norm, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        
+        # ── MÉTHODE 3: Utiliser le masque U-Net avec seuil modéré ──
+        # Utiliser un seuil plus bas pour capturer plus de la lésion
+        unet_mask = (mask_resized > 0.60).astype(np.uint8) * 255
+        
+        # ── FUSION DES MÉTHODES (APPROCHE ÉQUILIBRÉE) ──
+        # Utiliser l'union (OR) de la couleur et U-Net pour ne rien manquer
+        combined_mask = cv2.bitwise_or(color_mask, unet_mask)
+        
+        # Si le masque combiné est trop grand (>40%), utiliser seulement la couleur
+        if cv2.countNonZero(combined_mask) > (total_area * 0.40):
+            combined_mask = color_mask
+            # Si la couleur seule est vide, utiliser U-Net avec seuil plus élevé
+            if cv2.countNonZero(combined_mask) < 100:
+                combined_mask = (mask_resized > 0.75).astype(np.uint8) * 255
+        
+        # ── NETTOYAGE MORPHOLOGIQUE MODÉRÉ ──
+        # Éliminer le bruit
+        kernel_small = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+        combined_mask = cv2.morphologyEx(combined_mask, cv2.MORPH_OPEN, kernel_small, iterations=1)
+        
+        # Fermer les petits trous
+        kernel_large = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        combined_mask = cv2.morphologyEx(combined_mask, cv2.MORPH_CLOSE, kernel_large, iterations=2)
+        
+        # ── EXTRACTION DES CONTOURS ──
+        contours, _ = cv2.findContours(combined_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        
+        # ── FILTRAGE INTELLIGENT DES CONTOURS ──
+        min_area = 80      # Minimum 80 pixels (environ 0.16% de l'image)
+        max_area = total_area * 0.25  # Maximum 25% de l'image (pour capturer les grandes lésions)
+        
+        valid_contours = []
         for contour in contours:
-            if cv2.contourArea(contour) > min_area:
-                # Fill the anomaly region with semi-transparent red
-                cv2.fillPoly(mask_overlay, [contour], (255, 80, 80))
+            area = cv2.contourArea(contour)
+            if min_area < area < max_area:
+                # Vérifier la circularité (les lésions sont souvent arrondies)
+                perimeter = cv2.arcLength(contour, True)
+                if perimeter > 0:
+                    circularity = 4 * np.pi * area / (perimeter ** 2)
+                    # Accepter les formes avec circularité > 0.2 (formes relativement compactes)
+                    if circularity > 0.2:
+                        valid_contours.append(contour)
+        
+        # Trier par taille et garder les 5 plus grandes zones (pour capturer toute la lésion)
+        if len(valid_contours) > 5:
+            valid_contours = sorted(valid_contours, key=cv2.contourArea, reverse=True)[:5]
+        
+        # ── VISUALISATION MÉDICALE PROFESSIONNELLE ──
+        if len(valid_contours) > 0:
+            # Créer un masque binaire pour le calcul de la zone
+            final_filtered_mask = np.zeros(IMG_SIZE, dtype=np.uint8)
+            for contour in valid_contours:
+                cv2.fillPoly(final_filtered_mask, [contour], 255)
+            
+            # Créer un masque overlay semi-transparent
+            mask_overlay = np.zeros_like(overlay)
+            
+            for contour in valid_contours:
+                # Remplissage rouge semi-transparent
+                cv2.fillPoly(mask_overlay, [contour], (255, 70, 70))
+            
+            # Fusionner avec l'image originale (70% original, 30% overlay)
+            overlay = cv2.addWeighted(overlay, 0.7, mask_overlay, 0.3, 0)
+            
+            # Dessiner les contours avec bordure épaisse
+            for contour in valid_contours:
+                # Contour rouge vif
+                cv2.drawContours(overlay, [contour], -1, (220, 20, 20), 3)
                 
-                # Draw thick contour outline
-                cv2.drawContours(overlay, [contour], -1, (255, 0, 0), 2)
-        
-        # Blend the overlay with the original image
-        overlay = cv2.addWeighted(overlay, 0.7, mask_overlay, 0.3, 0)
-        
-        # Add contour outlines on top for clarity
-        for contour in contours:
-            if cv2.contourArea(contour) > min_area:
-                cv2.drawContours(overlay, [contour], -1, (220, 20, 20), 2)
+                # Ajouter un contour blanc externe pour meilleur contraste
+                cv2.drawContours(overlay, [contour], -1, (255, 255, 255), 1)
+                
+                # Ajouter des marqueurs aux coins du bounding box
+                x, y, w, h = cv2.boundingRect(contour)
+                corner_len = min(12, w // 5, h // 5)
+                
+                # Coins jaunes pour visibilité
+                corners = [
+                    ((x, y), (x + corner_len, y), (x, y + corner_len)),  # Top-left
+                    ((x + w, y), (x + w - corner_len, y), (x + w, y + corner_len)),  # Top-right
+                    ((x, y + h), (x + corner_len, y + h), (x, y + h - corner_len)),  # Bottom-left
+                    ((x + w, y + h), (x + w - corner_len, y + h), (x + w, y + h - corner_len))  # Bottom-right
+                ]
+                
+                for corner_pts in corners:
+                    cv2.line(overlay, corner_pts[0], corner_pts[1], (255, 220, 0), 3)
+                    cv2.line(overlay, corner_pts[0], corner_pts[2], (255, 220, 0), 3)
+        else:
+            # Aucun contour valide trouvé
+            final_filtered_mask = np.zeros(IMG_SIZE, dtype=np.uint8)
     
     elif visualization_type == "heatmap":
         # Original heatmap overlay
@@ -335,7 +440,14 @@ def _mask_to_base64(mask_2d: np.ndarray, original_arr: np.ndarray, visualization
     buf = io.BytesIO()
     pil_img.save(buf, format="PNG")
     buf.seek(0)
-    return "data:image/png;base64," + base64.b64encode(buf.read()).decode("utf-8")
+    b64_string = "data:image/png;base64," + base64.b64encode(buf.read()).decode("utf-8")
+    
+    # Retourner l'image ET le masque filtré
+    # Si pas de masque filtré créé (autres méthodes de visualisation), utiliser le masque U-Net
+    if final_filtered_mask is None:
+        final_filtered_mask = (mask_resized > 0.5).astype(np.uint8) * 255
+    
+    return b64_string, final_filtered_mask
 
 
 # ── Main prediction function ───────────────────────────────────────────────
@@ -393,10 +505,12 @@ def predict_skin_anomaly(
 
     if has_anomaly:
         seg_mask_raw = _unet.predict(arr_exp, verbose=0)[0, :, :, 0]
-        seg_pixels   = int(np.sum(seg_mask_raw > 0.5))
+        # Obtenir l'overlay ET le masque filtré
+        seg_overlay_b64, filtered_mask = _mask_to_base64(seg_mask_raw, arr, "medical")
+        # Calculer la zone affectée à partir du masque FILTRÉ (pas du masque U-Net brut)
+        seg_pixels   = int(np.sum(filtered_mask > 0))
         seg_area     = seg_pixels / (IMG_SIZE[0] * IMG_SIZE[1])
         seg_confirmed = seg_area > seg_area_threshold
-        seg_overlay_b64 = _mask_to_base64(seg_mask_raw, arr, "medical")  # Utilise la méthode médicale standard
 
     # ══════════════════════════════════════════════════════════════════════
     # STEP 4 — FINAL DECISION
