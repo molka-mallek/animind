@@ -16,11 +16,15 @@ backend/venv/
 venv/
 .venv/
 env/
+.kiro
+.vscode
 
 # ── Environment variables ─────────────────────────────────────────────────────
 .env
 .env.local
 .env.*.local
+
+
 
 # ── AI model files (too large for git — download from Drive link in README) ───
 *.keras
@@ -30,6 +34,10 @@ env/
 *.pkl
 *.onnx
 *.tflite
+*.npy
+
+# ── YAMNet cache (downloaded automatically on first run, ~25MB) ───────────────
+backend/model/cat_sound/yamnet_cache/
 
 # ── Training notebooks & raw model folder (not needed for deployment) ─────────
 backend/yolo_models_notebooks/

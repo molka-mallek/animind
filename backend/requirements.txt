@@ -55,3 +55,10 @@ python-dotenv==1.2.2
 tqdm==4.67.3
 safetensors==0.7.0
 huggingface_hub==1.14.0
+
+# ── Cat Vocalization Classification (YAMNet + head model) ────────────────────
+tensorflow>=2.20.0
+tensorflow-hub>=0.16.0
+tf-keras>=2.20.0
+# (librosa + soundfile already listed above under audio processing)
+# (torch + torchvision already listed above — covers Horse Pain + Thermal Cat)

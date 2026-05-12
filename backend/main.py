@@ -29,6 +29,12 @@ predict_fish_freshness = None
 _fish_pipeline_error = None
 predict_bird_species = None
 _xeno_pipeline_error = None
+predict_cat_sound = None
+_cat_sound_pipeline_error = None
+predict_horse_pain = None
+_horse_pain_pipeline_error = None
+predict_thermal_cat = None
+_thermal_cat_pipeline_error = None
 
 
 def _ensure_dog_pipeline_loaded():
@@ -209,6 +215,57 @@ def _ensure_fish_pipeline_loaded():
         _fish_pipeline_error = err
         return err
     predict_fish_freshness = func
+    return None
+
+
+def _ensure_cat_sound_pipeline_loaded():
+    global predict_cat_sound, _cat_sound_pipeline_error
+    if predict_cat_sound is not None:
+        return None
+    if _cat_sound_pipeline_error is not None:
+        return _cat_sound_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent / "modules" / "cat_sound" / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(pipeline_path, "cat_sound_pipeline", "predict_cat_sound")
+    if err:
+        _cat_sound_pipeline_error = err
+        return err
+    predict_cat_sound = func
+    return None
+
+
+def _ensure_horse_pain_pipeline_loaded():
+    global predict_horse_pain, _horse_pain_pipeline_error
+    if predict_horse_pain is not None:
+        return None
+    if _horse_pain_pipeline_error is not None:
+        return _horse_pain_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent / "modules" / "horse_pain" / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(pipeline_path, "horse_pain_pipeline", "predict_horse_pain")
+    if err:
+        _horse_pain_pipeline_error = err
+        return err
+    predict_horse_pain = func
+    return None
+
+
+def _ensure_thermal_cat_pipeline_loaded():
+    global predict_thermal_cat, _thermal_cat_pipeline_error
+    if predict_thermal_cat is not None:
+        return None
+    if _thermal_cat_pipeline_error is not None:
+        return _thermal_cat_pipeline_error
+    pipeline_path = (
+        Path(__file__).resolve().parent / "modules" / "thermal_cat" / "ai_pipeline.py"
+    )
+    func, err = _load_function_from_file(pipeline_path, "thermal_cat_pipeline", "predict_thermal_cat")
+    if err:
+        _thermal_cat_pipeline_error = err
+        return err
+    predict_thermal_cat = func
     return None
 
 
@@ -614,6 +671,81 @@ async def predict_bird_species_api(file: UploadFile = File(...)):
         with open(temp_path, "wb") as f:
             f.write(contents)
         result = predict_bird_species(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# CAT VOCALIZATION CLASSIFICATION
+# ─────────────────────────────────────────────
+@app.post("/predict-cat-sound")
+async def predict_cat_sound_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        err = _ensure_cat_sound_pipeline_loaded()
+        if err:
+            return {"error": f"Cat sound model unavailable: {err}"}
+        contents  = await file.read()
+        ext       = Path(file.filename).suffix if file.filename else ".wav"
+        if not ext:
+            ext = ".wav"
+        temp_path = f"temp_{uuid.uuid4().hex}{ext}"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_cat_sound(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# HORSE PAIN DETECTION
+# ─────────────────────────────────────────────
+@app.post("/predict-horse-pain")
+async def predict_horse_pain_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        err = _ensure_horse_pain_pipeline_loaded()
+        if err:
+            return {"error": f"Horse pain model unavailable: {err}"}
+        contents  = await file.read()
+        ext       = Path(file.filename).suffix if file.filename else ".mp4"
+        if not ext:
+            ext = ".mp4"
+        temp_path = f"temp_{uuid.uuid4().hex}{ext}"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_horse_pain(temp_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            os.remove(temp_path)
+
+
+# ─────────────────────────────────────────────
+# THERMAL CAT CLASSIFICATION
+# ─────────────────────────────────────────────
+@app.post("/predict-thermal-cat")
+async def predict_thermal_cat_api(file: UploadFile = File(...)):
+    temp_path = None
+    try:
+        err = _ensure_thermal_cat_pipeline_loaded()
+        if err:
+            return {"error": f"Thermal cat model unavailable: {err}"}
+        contents  = await file.read()
+        temp_path = f"temp_{uuid.uuid4().hex}.jpg"
+        with open(temp_path, "wb") as f:
+            f.write(contents)
+        result = predict_thermal_cat(temp_path)
         return result
     except Exception as e:
         return {"error": str(e)}

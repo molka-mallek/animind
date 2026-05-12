@@ -13,6 +13,9 @@ import BehavioralDisease from './modules/BehavioralDisease'
 import RabiesDetection from './modules/RabiesDetection'
 import FishFreshness from './modules/FishFreshness'
 import BirdSpecies from './modules/BirdSpecies'
+import CatSound from './modules/CatSound'
+import HorsePain from './modules/HorsePain'
+import ThermalCat from './modules/ThermalCat'
 
 export default function App() {
   return (
@@ -30,6 +33,9 @@ export default function App() {
           <Route path="modules/behavioral-disease" element={<BehavioralDisease />} />
           <Route path="modules/fish-freshness" element={<FishFreshness />} />
           <Route path="modules/bird-species" element={<BirdSpecies />} />
+          <Route path="modules/cat-sound" element={<CatSound />} />
+          <Route path="modules/horse-pain" element={<HorsePain />} />
+          <Route path="modules/thermal-cat" element={<ThermalCat />} />
           <Route path="rabies" element={<RabiesDetection />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
