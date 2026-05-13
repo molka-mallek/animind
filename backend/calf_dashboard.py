@@ -22,6 +22,7 @@ Do NOT:
 All inference logic lives in backend/modules/calf_behavior/ai_pipeline.py
 """
 
+import os
 import streamlit as st
 import requests
 import numpy as np
@@ -62,7 +63,8 @@ CLASS_COLORS = {
 ABNORMAL_CONF_THRESHOLD = 0.60   # fire alert only above this
 LYING_STREAK_ALERT      = 360    # windows = 6 hours (360 × 4s = 1440s)
 
-BACKEND_URL = "http://localhost:8000"
+# Use environment variable for production, fallback to localhost for development
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SIMULATED SENSOR — exact Gaussian profiles per behaviour
