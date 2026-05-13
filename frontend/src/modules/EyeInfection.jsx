@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './EyeInfection.module.css'
+import { API_BASE_URL } from '../config'
 
 const CONDITION_COLORS = {
   infected: { bg: '#fef2f2', border: '#fca5a5', text: '#dc2626' },
@@ -46,7 +47,7 @@ export default function EyeInfection() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const endpoint = 'http://127.0.0.1:8000/predict-eye-infection'
+      const endpoint = `${API_BASE_URL}/predict-eye-infection`
       const res  = await fetch(endpoint, { method: 'POST', body: formData })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       const data = await res.json()

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './BehavioralDisease.module.css'
+import { API_BASE_URL } from '../config'
 
 const CLASS_NAMES = ['Normal', 'Ataxia', 'Hip Dysplasia']
 
@@ -64,7 +65,7 @@ export default function BehavioralDisease() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-ataxia', {
+      const res = await fetch(`${API_BASE_URL}/predict-ataxia`, {
         method: 'POST',
         body: formData,
       })

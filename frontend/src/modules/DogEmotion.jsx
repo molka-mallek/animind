@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './DogEmotion.module.css'
+import { API_BASE_URL } from '../config'
 
 const MODE_TABS = [
   { id: 'image', label: '🖼️ Image', accept: 'image/*' },
@@ -62,8 +63,8 @@ export default function DogEmotion() {
       const formData = new FormData()
       formData.append('file', fileRef.current)
       const endpoint = mode === 'image'
-        ? 'http://127.0.0.1:8000/predict'
-        : 'http://127.0.0.1:8000/predict-video'
+        ? `${API_BASE_URL}/predict`
+        : `${API_BASE_URL}/predict-video`
       const res  = await fetch(endpoint, { method: 'POST', body: formData })
       const data = await res.json()
       if (data.error) throw new Error(data.error)

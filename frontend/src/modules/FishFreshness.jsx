@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './FishFreshness.module.css'
+import { API_BASE_URL } from '../config'
 
 const GRADE_COLORS = {
   C1: { bg: '#f0fdf4', border: '#86efac', text: '#16a34a' },
@@ -45,7 +46,7 @@ export default function FishFreshness() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-fish-freshness', {
+      const res = await fetch(`${API_BASE_URL}/predict-fish-freshness`, {
         method: 'POST',
         body: formData,
       })

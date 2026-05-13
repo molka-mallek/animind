@@ -2,6 +2,8 @@ import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './ThermalCat.module.css'
 
+import { API_BASE_URL } from '../config'
+
 export default function ThermalCat() {
   const navigate  = useNavigate()
   const inputRef  = useRef(null)
@@ -40,7 +42,7 @@ export default function ThermalCat() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-thermal-cat', {
+      const res = await fetch(`${API_BASE_URL}/predict-thermal-cat`, {
         method: 'POST',
         body: formData,
       })

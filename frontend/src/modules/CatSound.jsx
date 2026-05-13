@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './CatSound.module.css'
+import { API_BASE_URL } from '../config'
 
 const TIER_COLORS = {
   1: { bg: '#fef2f2', border: '#fca5a5', text: '#dc2626', icon: '🔴' },
@@ -61,7 +62,7 @@ export default function CatSound() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-cat-sound', {
+      const res = await fetch(`${API_BASE_URL}/predict-cat-sound`, {
         method: 'POST',
         body: formData,
       })

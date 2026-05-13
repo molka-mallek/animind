@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './EyeInfection.module.css'
+import { API_BASE_URL } from '../config'
 
 const CONDITION_COLORS = {
   rage:   { bg: '#fef2f2', border: '#fca5a5', text: '#b91c1c' },
@@ -45,7 +46,7 @@ export default function RabiesDetection() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://localhost:8000/predict-rabies', { method: 'POST', body: formData })
+      const res = await fetch(`${API_BASE_URL}/predict-rabies`, { method: 'POST', body: formData })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       const data = await res.json()
       if (data.error) throw new Error(data.error)

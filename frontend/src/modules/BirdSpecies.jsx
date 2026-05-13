@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './BirdSpecies.module.css'
+import { API_BASE_URL } from '../config'
 
 const SUPPORTED_SPECIES = [
   { key: 'Common_Cuckoo',           label: 'Common Cuckoo',            emoji: '🐦' },
@@ -62,7 +63,7 @@ export default function BirdSpecies() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-bird-species', {
+      const res = await fetch(`${API_BASE_URL}/predict-bird-species`, {
         method: 'POST',
         body: formData,
       })

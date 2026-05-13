@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './SkinAnomaly.module.css'
+import { API_BASE_URL } from '../config'
 
 const STATUS_COLORS = {
   anomaly: { bg: '#fef2f2', border: '#fca5a5', text: '#dc2626' },
@@ -44,7 +45,7 @@ export default function SkinAnomaly() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-skin-anomaly', { method: 'POST', body: formData })
+      const res = await fetch(`${API_BASE_URL}/predict-skin-anomaly`, { method: 'POST', body: formData })
       if (!res.ok) throw new Error(`Request failed (${res.status})`)
       const data = await res.json()
       if (data.error) throw new Error(data.error)

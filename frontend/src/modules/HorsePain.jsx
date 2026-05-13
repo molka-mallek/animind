@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './HorsePain.module.css'
+import { API_BASE_URL } from '../config'
 
 export default function HorsePain() {
   const navigate  = useNavigate()
@@ -41,7 +42,7 @@ export default function HorsePain() {
     try {
       const formData = new FormData()
       formData.append('file', fileRef.current)
-      const res = await fetch('http://127.0.0.1:8000/predict-horse-pain', {
+      const res = await fetch(`${API_BASE_URL}/predict-horse-pain`, {
         method: 'POST',
         body: formData,
       })
