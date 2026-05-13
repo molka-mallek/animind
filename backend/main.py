@@ -416,6 +416,10 @@ def detect_event(behavior: str, state: dict) -> dict:
 def root():
     return {"message": "AniMind API is running"}
 
+@app.get("/healthz")
+def health():
+    return {"status": "ok"}
+
 # ─────────────────────────────────────────────
 # LIST ACTIVE CALVES
 # ─────────────────────────────────────────────
